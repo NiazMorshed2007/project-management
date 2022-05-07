@@ -1,6 +1,8 @@
+@import "~antd/dist/antd.css";
+@import "colors";
 @import "font";
 @import "classes";
-@import "./pages/home";
+@import "./pages/auth";
 
 * {
   margin: 0;
@@ -9,6 +11,8 @@
 }
 
 body {
-  font-family: $nunito;
+  font-family: $inter;
   overflow-x: hidden;
+  background-color: $btnClr;
+  color: $primary;
 }

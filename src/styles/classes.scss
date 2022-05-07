@@ -1,12 +1,19 @@
 .primary-btn {
-  @apply bg-primary p-3 px-7 font-semibold outline-none rounded-md text-white cursor-pointer;
+  @apply bg-brand flex items-center justify-center border-brand p-3 px-7 shadow-brand outline-none rounded text-btnColor cursor-pointer;
   transition: all 0.3s ease-in-out;
-  &:hover {
-    box-shadow: 0px 8px 20px -6px rgb(5 189 147 / 60%);
+  &:hover,
+  &:focus {
+    @apply bg-secondaryBrand border-brand text-btnColor;
+  }
+  &:focus {
+    @apply bg-brand;
   }
 }
 
-.title {
-  @apply font-semibold;
-  font-size: calc(1.3rem + 0.6vw);
+.hovPrimary-btn {
+  @extend .primary-btn;
+  @apply bg-transparent text-secondary border-transparent;
+  &:hover {
+    @apply bg-brand border-brand;
+  }
 }
