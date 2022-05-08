@@ -1,12 +1,18 @@
 import { Button } from "antd";
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
+  const isGlobalLoading = useSelector((state) => {
+    return state.isGlobalLoading;
+  });
   const handleLogin = () => {};
   useEffect(() => {
-    navigate("/login");
+    if (!isGlobalLoading) {
+      navigate("/login");
+    }
   }, []);
   return (
     <>

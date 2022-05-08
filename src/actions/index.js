@@ -1,4 +1,4 @@
-import { SET_G_LOADING, SET_LOGGED } from "./actionTypes";
+import { SET_G_LOADING, SET_LOGGED, SET_USER_PROFILE } from "./actionTypes";
 
 export const setLogged = (bool) => {
   return {
@@ -15,5 +15,12 @@ export const SetGlobalLoading = (bool) => {
     payload: {
       val: bool,
     },
+  };
+};
+
+export const setUserProfile = (obj) => {
+  return {
+    type: SET_USER_PROFILE,
+    ...obj,
   };
 };

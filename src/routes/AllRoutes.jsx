@@ -7,6 +7,7 @@ const AllRoutes = () => {
   const isLogged = useSelector((state) => {
     return state.isLogged;
   });
+
   return <>{isLogged ? <PrivateRoutes /> : <Auth />}</>;
 };
 

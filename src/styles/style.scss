@@ -3,6 +3,7 @@
 @import "font";
 @import "classes";
 @import "antd";
+@import "./components/header";
 @import "./pages/auth";
 
 * {
@@ -14,6 +15,6 @@
 body {
   font-family: $inter;
   overflow-x: hidden;
-  background-color: $btnClr;
+  // background-color: $btnClr;
   color: $primary;
 }

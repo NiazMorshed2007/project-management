@@ -1,14 +1,19 @@
 import { Button, Tooltip } from "antd";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import React, { useState } from "react";
 import {
   AiOutlineEye,
   AiOutlineEyeInvisible,
   AiOutlineInfoCircle,
 } from "react-icons/ai";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { auth } from "../../firebase/firebase";
+import { SetGlobalLoading, setLogged } from "../../actions/index";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState("");
@@ -23,18 +28,31 @@ const SignUp = () => {
     setName(e.target.value);
   };
   const handleSignUp = (e) => {
-    // createUserWithEmailAndPassword(auth, email, password)
-    //   .then((userCredential) => {
-    //     // Signed in
-    //     const user = userCredential.user;
-    //     console.log(user);
-    //     // ...
-    //   })
-    //   .catch((error) => {
-    //     const errorCode = error.code;
-    //     const errorMessage = error.message;
-    //     // ..
-    //   });
+    e.preventDefault();
+    dispatch(SetGlobalLoading(true));
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+        dispatch(setLogged(true));
+        updateProfile(auth.currentUser, {
+          displayName: name,
+        })
+          .then(() => {
+            SetGlobalLoading(false);
+            navigate("/");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
   };
   return (
     <>

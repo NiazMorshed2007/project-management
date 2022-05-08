@@ -1,6 +1,6 @@
 import { SET_G_LOADING } from "../actions/actionTypes";
 
-const isGLoading = false;
+const isGLoading = true;
 
 const GlobalLoadingReducer = (state = isGLoading, action) => {
   switch (action.type) {
