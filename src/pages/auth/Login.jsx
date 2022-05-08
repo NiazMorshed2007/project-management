@@ -15,14 +15,18 @@ const Login = () => {
       <div className="form-wrapper mt-7 w-72">
         <form onSubmit={handleLogin}>
           <div className="label-inp">
-            <input required id="email" type="email" />
+            <input required={true} id="email" type="text" />
             <label htmlFor="email">Email</label>
           </div>
           <div className="label-inp">
             <input required id="password" type="password" />
             <label htmlFor="email">Password</label>
           </div>
-          <Button className="w-full mt-5 primary-btn" size="large">
+          <Button
+            htmlType="submit"
+            className="w-full mt-5 primary-btn"
+            size="large"
+          >
             Login
           </Button>
         </form>

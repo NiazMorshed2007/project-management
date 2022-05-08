@@ -18,7 +18,10 @@
           @apply text-sm -top-6;
         }
         input {
-          @apply border-b p-1 pl-0 w-full mb-9 border-secondary/40 outline-none;
+          @apply border-b hover:border-brand p-1 pl-0 w-full mb-9 border-secondary/40 outline-none;
+          &:focus {
+            @apply border-brand;
+          }
           &:focus ~ label {
             @extend .anim-label;
           }
@@ -30,6 +33,12 @@
         label {
           @apply text-lg absolute text-secondary/70 top-0 left-0 pointer-events-none;
           transition: all 0.25s ease-in-out;
+        }
+        i {
+          @apply absolute top-1 right-0 text-base;
+          svg {
+            @apply hover:text-brand cursor-pointer;
+          }
         }
       }
     }

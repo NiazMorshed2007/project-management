@@ -1,0 +1,9 @@
+.ant-tooltip {
+  .ant-tooltip-content {
+    @apply rounded-md flex items-center justify-center;
+    .ant-tooltip-inner {
+      @apply pt-1 text-xs rounded-md;
+      line-height: 2;
+    }
+  }
+}

@@ -1,13 +1,12 @@
+import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { SetGlobalLoading, setLogged } from "./actions";
 import Loader from "./components/Loader";
+import { auth } from "./firebase/firebase";
 import AllRoutes from "./routes/AllRoutes";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { SetGlobalLoading } from "./actions";
-import firebase from "./firebase/firebase";
 
 const App = () => {
-  const auth = firebase && getAuth();
   const dispatch = useDispatch();
   const isGlobalLoading = useSelector((state) => {
     return state.isGlobalLoading;
@@ -17,8 +16,10 @@ const App = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         console.log(user);
+        dispatch(setLogged(true));
       } else {
         console.log("signed out");
+        dispatch(setLogged(false));
       }
     });
     dispatch(SetGlobalLoading(false));
