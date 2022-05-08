@@ -4,4 +4,26 @@
       @apply uppercase text-sm font-light tracking-wide;
     }
   }
+  form {
+    .label-inp {
+      @apply relative w-72;
+      .anim-label {
+        @apply text-sm -top-6;
+      }
+      input {
+        @apply border-b p-1 pl-0 w-full mb-9 border-secondary/40 outline-none;
+        &:focus ~ label {
+          @extend .anim-label;
+        }
+        &:valid ~ label {
+          @extend .anim-label;
+          @apply -top-6;
+        }
+      }
+      label {
+        @apply text-lg absolute text-secondary top-0 left-0 pointer-events-none;
+        transition: all 0.25s ease-in-out;
+      }
+    }
+  }
 }
