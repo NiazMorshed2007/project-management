@@ -6,7 +6,7 @@ import Logo from "./Logo";
 const AuthHeader = () => {
   const navigate = useNavigate();
   return (
-    <header className="flex sticky top-0 w-full items-center justify-between">
+    <header className="flex w-full items-center justify-between">
       <Logo w={90} h={40} />
       <nav className="flex gap-7">
         <Button

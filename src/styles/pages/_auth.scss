@@ -4,25 +4,42 @@
       @apply uppercase text-sm font-light tracking-wide;
     }
   }
-  form {
-    .label-inp {
-      @apply relative w-72;
-      .anim-label {
-        @apply text-sm -top-6;
-      }
-      input {
-        @apply border-b p-1 pl-0 w-full mb-9 border-secondary/40 outline-none;
-        &:focus ~ label {
-          @extend .anim-label;
+  section {
+    h1 {
+      @apply mt-11 text-3xl font-semibold;
+    }
+    p {
+      @apply mt-2 text-secondary text-lg;
+    }
+    form {
+      .label-inp {
+        @apply relative w-72;
+        .anim-label {
+          @apply text-sm -top-6;
         }
-        &:valid ~ label {
-          @extend .anim-label;
-          @apply -top-6;
+        input {
+          @apply border-b p-1 pl-0 w-full mb-9 border-secondary/40 outline-none;
+          &:focus ~ label {
+            @extend .anim-label;
+          }
+          &:valid ~ label {
+            @extend .anim-label;
+            @apply -top-6;
+          }
+        }
+        label {
+          @apply text-lg absolute text-secondary/70 top-0 left-0 pointer-events-none;
+          transition: all 0.25s ease-in-out;
         }
       }
-      label {
-        @apply text-lg absolute text-secondary top-0 left-0 pointer-events-none;
-        transition: all 0.25s ease-in-out;
+    }
+    .option {
+      @apply w-3/12 mt-14 border-t border-gray-300;
+      p {
+        @apply text-sm text-secondary/40 mt-5;
+        span {
+          @apply text-brand cursor-pointer;
+        }
       }
     }
   }

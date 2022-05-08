@@ -1,6 +1,9 @@
 .primary-btn {
-  @apply bg-brand flex items-center justify-center border-brand p-3 px-7 shadow-brand outline-none rounded text-btnColor cursor-pointer;
+  @apply bg-brand flex h-auto items-center justify-center border-brand p-1 px-7 shadow-brand outline-none rounded text-btnColor cursor-pointer;
   transition: all 0.3s ease-in-out;
+  span {
+    @apply py-1;
+  }
   &:hover,
   &:focus {
     @apply bg-secondaryBrand border-brand text-btnColor;
