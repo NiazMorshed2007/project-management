@@ -62,8 +62,8 @@ const SignUp = () => {
         <form onSubmit={handleSignUp}>
           <div className="label-inp">
             <input
-              onChange={handleEmail}
               value={email}
+              onChange={handleEmail}
               required
               id="email"
               type="text"

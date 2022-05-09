@@ -21,7 +21,7 @@ const Login = () => {
       <div className="form-wrapper mt-7 w-72">
         <form onSubmit={handleLogin}>
           <div className="label-inp">
-            <input required={true} id="email" type="text" />
+            <input required id="email" type="text" />
             <label htmlFor="email">Email</label>
           </div>
           <div className="label-inp">

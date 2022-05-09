@@ -1,5 +1,7 @@
 {
   "name": "project-management",
+  "author": "Niaz Morshed",
+  "description": "A project management software where teams can manage project with their members with interactive environment!",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
