@@ -3,11 +3,19 @@
     margin: 0;
   }
   .upper {
-    .burger {
-      .line {
-        @apply w-5 bg-secondary;
-        margin: 4px;
-        height: 2px;
+    .left {
+      .burger {
+        .line {
+          @apply w-5 bg-secondary;
+          margin: 4px;
+          height: 2px;
+        }
+      }
+    }
+    .right {
+      svg {
+        font-size: 20px;
+        cursor: pointer;
       }
     }
   }

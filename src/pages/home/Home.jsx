@@ -1,11 +1,11 @@
 import React from "react";
-import Header from "../../components/Header";
 import Layout from "../../layout/Layout";
+import HeaderHome from "./HeaderHome";
 
 const Home = () => {
   return (
     <Layout>
-      <Header />
+      <HeaderHome />
       <div className="p-7">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore,
         accusantium! Totam, deserunt! Placeat, error, quibusdam tenetur quia,
