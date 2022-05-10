@@ -8,29 +8,33 @@ import {
 } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../../firebase/firebase";
-import { SetGlobalLoading, setLogged } from "../../actions/index";
+import { auth, db } from "../../firebase/firebase";
+import {
+  SetGlobalLoading,
+  setLogged,
+  setUserProfile,
+} from "../../actions/index";
+import { doc, setDoc, Timestamp } from "firebase/firestore";
+import { generateLogoText } from "../../functions/LogoText";
 
 const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+    name: "",
+  });
+  const { email, password, name } = data;
   const [showPass, setShowPass] = useState("");
-  const [name, setName] = useState();
-  const handleEmail = (e) => {
-    setEmail(e.target.value);
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
   };
-  const handlePass = (e) => {
-    setPassword(e.target.value);
-  };
-  const handleName = (e) => {
-    setName(e.target.value);
-  };
-  const handleSignUp = (e) => {
+
+  const handleSignUp = async (e) => {
     e.preventDefault();
     dispatch(SetGlobalLoading(true));
-    createUserWithEmailAndPassword(auth, email, password)
+    await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
@@ -39,9 +43,22 @@ const SignUp = () => {
         updateProfile(auth.currentUser, {
           displayName: name,
         })
-          .then(() => {
-            SetGlobalLoading(false);
-            navigate("/");
+          .then(async () => {
+            await setDoc(doc(db, "users", user.uid), {
+              displayName: user.displayName,
+              name,
+              email,
+              logoText: generateLogoText(name),
+              avatar: user.photoURL,
+              joinedAt: Timestamp.fromDate(new Date()),
+            })
+              .then(() => {
+                navigate("/");
+                SetGlobalLoading(false);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           })
           .catch((err) => {
             console.log(err);
@@ -63,9 +80,10 @@ const SignUp = () => {
           <div className="label-inp">
             <input
               value={email}
-              onChange={handleEmail}
+              onChange={handleChange}
               required
               id="email"
+              name="email"
               type="text"
             />
             <label htmlFor="email">Email</label>
@@ -73,8 +91,9 @@ const SignUp = () => {
           <div className="label-inp">
             <input
               value={name}
-              onChange={handleName}
+              onChange={handleChange}
               required
+              name="name"
               id="name"
               type="text"
             />
@@ -88,7 +107,8 @@ const SignUp = () => {
           <div className="label-inp">
             <input
               value={password}
-              onChange={handlePass}
+              onChange={handleChange}
+              name="password"
               required
               id="password"
               type={showPass ? "text" : "password"}

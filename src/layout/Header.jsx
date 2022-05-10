@@ -36,14 +36,13 @@ const Header = (props) => {
                 <Menu
                   items={[
                     {
-                      type: "none",
                       style: {
                         background: "none",
                         padding: "0 12px",
                       },
                       label: (
                         <span className="text-xs text-secondary">
-                          {userProfile.displayName}
+                          {userProfile.name}
                         </span>
                       ),
                     },
@@ -66,8 +65,9 @@ const Header = (props) => {
                     { type: "divider" },
                     {
                       key: "apperance",
-                      label: "Appearance",
-                      className: "flex items-center",
+                      type: "sub-menu",
+                      label: "Apperance",
+                      title: "Appearance",
                       icon: <IoColorPaletteOutline />,
                       children: [
                         {
@@ -81,8 +81,8 @@ const Header = (props) => {
                       ],
                     },
                   ]}
-                  style={{ marginRight: 15 + "px" }}
-                ></Menu>
+                  style={{ marginRight: 10 + "px" }}
+                />
               }
             >
               <Tooltip title={userProfile.displayName}>

@@ -1,17 +1,34 @@
-import React from "react";
+import React, { useMemo } from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import BaseInfo from "../../components/BaseInfo";
 import Layout from "../../layout/Layout";
 import HeaderHome from "./HeaderHome";
 
 const Home = () => {
+  const { id } = useParams();
+  const userProfile = useSelector((state) => {
+    return state.userProfile;
+  });
+  const memoId = useMemo(() => id, []);
   return (
     <Layout>
-      <HeaderHome />
-      <div className="p-7">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore,
-        accusantium! Totam, deserunt! Placeat, error, quibusdam tenetur quia,
-        cupiditate distinctio accusantium incidunt doloremque excepturi nostrum
-        exercitationem est aperiam corporis et earum.
-      </div>
+      <HeaderHome id={memoId} />
+      <main className="p-7">
+        <BaseInfo
+          avatr={
+            <>
+              {userProfile.avatar !== null ? (
+                <img src={userProfile.avatar} alt="avatar" />
+              ) : (
+                <h1 className="font-semibold text-white text-2xl">
+                  {userProfile.logoText}
+                </h1>
+              )}
+            </>
+          }
+        />
+      </main>
     </Layout>
   );
 };

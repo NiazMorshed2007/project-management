@@ -4,11 +4,16 @@ import Auth from "../pages/auth/Auth";
 import PrivateRoutes from "./PrivateRoutes";
 
 const AllRoutes = () => {
+  const isGlobalLoading = useSelector((state) => {
+    return state.isGlobalLoading;
+  });
   const isLogged = useSelector((state) => {
     return state.isLogged;
   });
-
-  return <>{isLogged ? <PrivateRoutes /> : <Auth />}</>;
+  console.log("all routes mounted");
+  return (
+    <>{!isGlobalLoading && <>{isLogged ? <PrivateRoutes /> : <Auth />}</>}</>
+  );
 };
 
 export default AllRoutes;
