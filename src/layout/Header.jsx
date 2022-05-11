@@ -2,21 +2,26 @@ import { Dropdown, Menu, Tooltip } from "antd";
 import React from "react";
 import { AiOutlinePlus, AiOutlineSearch, AiOutlineUser } from "react-icons/ai";
 import { IoMdNotificationsOutline } from "react-icons/io";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BsCreditCard2Front } from "react-icons/bs";
 import { RiApps2Line } from "react-icons/ri";
 import { IoColorPaletteOutline } from "react-icons/io5";
+import { setOpenedSidebar } from "../actions";
 
 const Header = (props) => {
   const { head, children } = props;
+  const dispatch = useDispatch();
   const userProfile = useSelector((state) => {
     return state.userProfile;
   });
+  const showSidebar = () => {
+    dispatch(setOpenedSidebar(true));
+  };
   return (
     <header className="main-header p-5 pr-3 pl-7 pb-0 w-full sticky top-0 border-b">
       <div className="upper flex items-center justify-between">
         <div className="left flex items-center gap-4">
-          <div className="burger cursor-pointer">
+          <div onClick={showSidebar} className="burger cursor-pointer">
             <div className="line"></div>
             <div className="line"></div>
             <div className="line"></div>
