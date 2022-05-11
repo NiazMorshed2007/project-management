@@ -14,8 +14,9 @@ import {
   setLogged,
   setUserProfile,
 } from "../../actions/index";
-import { doc, setDoc, Timestamp } from "firebase/firestore";
+import { doc, serverTimestamp, setDoc, Timestamp } from "firebase/firestore";
 import { generateLogoText } from "../../functions/LogoText";
+import { getTime } from "../../functions/Time";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -50,10 +51,10 @@ const SignUp = () => {
               email,
               logoText: generateLogoText(name),
               avatar: user.photoURL,
-              joinedAt: Timestamp.fromDate(new Date()),
+              joinedAt: getTime("m/d/y"),
             })
               .then(() => {
-                navigate("/");
+                navigate("/u/overview");
                 SetGlobalLoading(false);
               })
               .catch((err) => {

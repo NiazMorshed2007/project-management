@@ -1,15 +1,24 @@
 import React from "react";
 
 const BaseInfo = (props) => {
-  const { avatar, info } = props;
+  const { avatar, info, actions, rounded } = props;
   return (
-    <div className="base-info flex items-center gap-5">
+    <div className="base-info border-b bordr-gray-200 pb-8 w-full flex items-center gap-8">
       <div className="avatar-wrapper">
-        <div className="avatar flex items-center justify-center w-52 h-52 rounded-full bg-brand">
+        <div
+          className={`avatar flex items-center justify-center w-44 h-44 ${
+            rounded ? "rounded-full" : "rounded-3xl"
+          } bg-secondaryBrand`}
+        >
           {avatar}
         </div>
       </div>
-      <div className="info">{info}</div>
+      <div className="info-wrapper w-4/5">
+        <div className="flex justify-between">
+          <div className="info">{info}</div>
+          <div className="actions">{actions}</div>
+        </div>
+      </div>
     </div>
   );
 };

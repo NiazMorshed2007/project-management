@@ -15,7 +15,6 @@ const CustomTabs = (props) => {
   useEffect(() => {
     setActiveTab(defaultActiveTabId);
   }, [defaultActiveTabId]);
-  console.log("custom tabs");
   return (
     <div className="tabs-wrapper relative flex items-center gap-4">
       {tabs.map((tab) => (

@@ -10,7 +10,6 @@ const AllRoutes = () => {
   const isLogged = useSelector((state) => {
     return state.isLogged;
   });
-  console.log("all routes mounted");
   return (
     <>{!isGlobalLoading && <>{isLogged ? <PrivateRoutes /> : <Auth />}</>}</>
   );

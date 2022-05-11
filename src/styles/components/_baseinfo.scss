@@ -1,0 +1,16 @@
+.base-info {
+  .avatar-wrapper {
+    .avatar {
+      aspect-ratio: attr(width) / attr(height);
+    }
+  }
+  .info-wrapper {
+    .actions {
+      i {
+        @apply text-lg text-secondary/70;
+        svg {
+        }
+      }
+    }
+  }
+}

@@ -9,7 +9,6 @@ const HeaderHome = (props) => {
     return state.userProfile;
   });
   const [tabs, setTabs] = useState([]);
-  console.log("header home changes");
   useEffect(() => {
     setTabs([
       {

@@ -33,7 +33,6 @@ const App = () => {
         uid = user.uid;
         dispatch(setLogged(true));
         setUid(user.uid);
-        dispatch(SetGlobalLoading(false));
       } else {
         console.log("signed out");
         dispatch(setLogged(false));
@@ -47,6 +46,7 @@ const App = () => {
       onSnapshot(doc(db, "users", uid), (doc) => {
         const data = doc.data();
         dispatch(setUserProfile(data));
+        dispatch(SetGlobalLoading(false));
       });
     }
   }, [uid]);

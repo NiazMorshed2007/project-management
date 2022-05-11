@@ -1,4 +1,9 @@
-import { SET_G_LOADING, SET_LOGGED, SET_USER_PROFILE } from "./actionTypes";
+import {
+  SET_G_LOADING,
+  SET_LOGGED,
+  SET_OPEN_SIDEBAR,
+  SET_USER_PROFILE,
+} from "./actionTypes";
 
 export const setLogged = (bool) => {
   return {
@@ -12,6 +17,15 @@ export const setLogged = (bool) => {
 export const SetGlobalLoading = (bool) => {
   return {
     type: SET_G_LOADING,
+    payload: {
+      val: bool,
+    },
+  };
+};
+
+export const setOpenedSidebar = (bool) => {
+  return {
+    type: SET_OPEN_SIDEBAR,
     payload: {
       val: bool,
     },

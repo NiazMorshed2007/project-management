@@ -87,7 +87,7 @@ const Header = (props) => {
             >
               <Tooltip title={userProfile.displayName}>
                 <div className="avatar p-1 w-7 h-7 flex items-center justify-center bg-brand rounded-full text-white">
-                  NI
+                  {userProfile.logoText}
                 </div>
               </Tooltip>
             </Dropdown>
