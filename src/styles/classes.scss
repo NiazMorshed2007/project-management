@@ -1,6 +1,7 @@
 .primary-btn {
   @apply bg-brand flex h-auto items-center justify-center border-brand p-1 px-7 shadow-brand outline-none rounded text-btnColor cursor-pointer;
   transition: all 0.3s ease-in-out;
+
   span {
     @apply py-1;
   }
@@ -10,6 +11,62 @@
   }
   &:focus {
     @apply bg-brand;
+  }
+}
+
+.primary-btn-unfilled {
+  @extend .primary-btn;
+  @apply bg-white text-brand;
+  padding: 3px 13px;
+
+  &:hover,
+  &:focus {
+    @apply bg-brand/10 text-brand;
+  }
+  &:focus {
+    @apply bg-white;
+  }
+}
+
+.default-btn-unfilled {
+  @extend .primary-btn-unfilled;
+  @apply text-primary shadow border-gray-300;
+  &:hover,
+  &:focus {
+    @apply bg-gray-200/20 border-gray-300;
+  }
+  &:focus {
+    @apply bg-white;
+  }
+}
+
+.label-inp {
+  @apply relative w-full;
+  .anim-label {
+    @apply text-sm -top-6;
+  }
+  input {
+    @apply border-b hover:border-brand p-1 pl-0 w-full mb-9 border-secondary/40 outline-none;
+    &:focus {
+      @apply border-brand;
+    }
+    &:focus ~ label {
+      @extend .anim-label;
+    }
+    &:valid ~ label {
+      @extend .anim-label;
+      @apply -top-6;
+    }
+  }
+  label {
+    @apply text-lg absolute text-secondary/70 top-0 left-0 pointer-events-none;
+    transition: all 0.25s ease-in-out;
+  }
+  i {
+    @apply absolute top-1 right-0 text-base;
+    svg {
+      @apply hover:text-brand cursor-pointer;
+    }
   }
 }
 

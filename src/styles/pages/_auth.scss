@@ -12,35 +12,7 @@
       @apply mt-2 text-secondary text-lg;
     }
     form {
-      .label-inp {
-        @apply relative w-72;
-        .anim-label {
-          @apply text-sm -top-6;
-        }
-        input {
-          @apply border-b hover:border-brand p-1 pl-0 w-full mb-9 border-secondary/40 outline-none;
-          &:focus {
-            @apply border-brand;
-          }
-          &:focus ~ label {
-            @extend .anim-label;
-          }
-          &:valid ~ label {
-            @extend .anim-label;
-            @apply -top-6;
-          }
-        }
-        label {
-          @apply text-lg absolute text-secondary/70 top-0 left-0 pointer-events-none;
-          transition: all 0.25s ease-in-out;
-        }
-        i {
-          @apply absolute top-1 right-0 text-base;
-          svg {
-            @apply hover:text-brand cursor-pointer;
-          }
-        }
-      }
+
     }
     .option {
       @apply w-3/12 mt-14 border-t border-gray-300;
