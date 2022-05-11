@@ -8,10 +8,9 @@ import HomeOverview from "./Overview";
 
 const Home = () => {
   const { id } = useParams();
-  const memoId = useMemo(() => id, []);
   return (
     <Layout>
-      <HeaderHome id={memoId} />
+      <HeaderHome id={id} />
       <Main>
         {id === "overview" && <HomeOverview />}
         {id === "my_tasks" && <TaskPage />}

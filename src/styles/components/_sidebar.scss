@@ -1,4 +1,19 @@
 .sidebar {
   width: 250px;
   transition: all 0.3s ease-in-out;
+  header {
+    i {
+      font-size: 20px;
+      @apply cursor-pointer transition-all hover:opacity-80;
+    }
+  }
+  main {
+    @apply flex flex-col gap-4 pl-4 pt-5;
+    .sec {
+      @apply cursor-pointer pb-2 flex gap-3 items-center border-b border-gray-200;
+      p {
+        @apply hover:text-brand;
+      }
+    }
+  }
 }

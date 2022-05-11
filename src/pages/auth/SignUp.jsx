@@ -17,6 +17,7 @@ import {
 import { doc, serverTimestamp, setDoc, Timestamp } from "firebase/firestore";
 import { generateLogoText } from "../../functions/LogoText";
 import { getTime } from "../../functions/Time";
+import { generateId } from "../../functions/idGenerator";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -51,6 +52,14 @@ const SignUp = () => {
               email,
               logoText: generateLogoText(name),
               avatar: user.photoURL,
+              organizations: [
+                {
+                  org_name: name + "'s Organization",
+                  org_id: generateId(name + "'s Organization"),
+                  org_logo: null,
+                  org_logoText: generateLogoText(name + "'s Organization"),
+                },
+              ],
               joinedAt: getTime("m/d/y"),
             })
               .then(() => {

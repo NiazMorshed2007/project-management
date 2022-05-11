@@ -2,10 +2,18 @@ import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpenedSidebar } from "../actions";
 import Logo from "./Logo";
+import { AiOutlinePushpin, AiOutlineSearch } from "react-icons/ai";
+import { NavLink, useNavigate } from "react-router-dom";
+import { AiOutlinePlus } from "react-icons/ai";
+import { Dropdown, Menu } from "antd";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
   const isOpenedSidebar = useSelector((state) => {
     return state.isOpenedSidebar;
+  });
+  const userProfile = useSelector((state) => {
+    return state.userProfile;
   });
   const sideBarRef = useRef();
   const dispatch = useDispatch();
@@ -27,7 +35,67 @@ const Sidebar = () => {
           isOpenedSidebar ? "translate-x-0" : "-translate-x-full"
         } p-2 fixed h-full bg-white shadow-lg border border-gray-200`}
       >
-        <Logo w={80} h={60} />
+        <header className="flex p-2 pl-0 items-center justify-between">
+          <div>
+            <Logo w={70} h={40} />
+          </div>
+          <div className="flex items-center gap-4">
+            <i>
+              <AiOutlineSearch />
+            </i>
+            <i>
+              <AiOutlinePushpin />
+            </i>
+          </div>
+        </header>
+        <main className="py-2 pr-2">
+          <div
+            onClick={() => {
+              navigate("/u/my_tasks");
+            }}
+            className="sec"
+          >
+            <div className="avatar p-1 w-6 h-6 text-xs flex items-center justify-center bg-brand rounded-full text-white">
+              {userProfile.logoText}
+            </div>
+            <p className="m-0">My Tasks</p>
+          </div>
+          <div
+            // onClick={() => {
+            //   navigate("/u/my_tasks");
+            // }}
+            className="sec justify-between"
+          >
+            <p className="m-0">WORKSPACE</p>
+            <Dropdown
+              trigger={["click"]}
+              overlay={
+                <Menu
+                  items={[
+                    {
+                      label: "Add Project",
+                      key: "add_project",
+                      onClick: () => {
+                        navigate("/c/project");
+                      },
+                    },
+                    {
+                      label: "Add Organization",
+                      key: "add_org",
+                      onClick: () => {
+                        navigate("/c/organization");
+                      },
+                    },
+                  ]}
+                />
+              }
+            >
+              <i>
+                <AiOutlinePlus />
+              </i>
+            </Dropdown>
+          </div>
+        </main>
       </aside>
     </div>
   );
