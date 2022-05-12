@@ -33,6 +33,7 @@ const CreateOrganization = () => {
         org_name: name,
         org_id: generateId(name),
         org_logoText: generateLogoText(name),
+        owner_id: userProfile.uid,
       };
       await addDoc(collection(db, "organizations"), {
         ...org_data,

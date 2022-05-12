@@ -95,6 +95,23 @@ const Sidebar = () => {
               </i>
             </Dropdown>
           </div>
+          <div className="flex-col items-start">
+            Organizations
+            <div>
+              {userProfile.organizations &&
+                userProfile.organizations.map((org) => (
+                  <div
+                    key={org.org_id}
+                    onClick={() => {
+                      navigate(`/w/o/overview?orgId=${org.org_id}`);
+                    }}
+                    className=" hover:text-brand cursor-pointer"
+                  >
+                    {org.org_name}
+                  </div>
+                ))}
+            </div>
+          </div>
         </main>
       </aside>
     </div>

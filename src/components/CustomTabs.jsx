@@ -7,7 +7,6 @@ const CustomTabs = (props) => {
   const navigate = useNavigate();
   const setActiveKey = (key) => {
     setActiveTab(key);
-    navigate(`/u/${key}`);
   };
   // useEffect(() => {
   //   setInkWidth(tabRef.current.offsetWidth);
@@ -22,6 +21,7 @@ const CustomTabs = (props) => {
           // ref={tab === activeTab && tabRef}
           onClick={() => {
             setActiveKey(tab.id);
+            navigate(tab.link);
           }}
           style={{ ...tab.style }}
           className={`tab ${

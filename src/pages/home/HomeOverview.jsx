@@ -28,7 +28,7 @@ const HomeOverview = () => {
             <p className="text-lg text-secondary/50 m-0">USER</p>
             <h1 className="text-4xl mb-1">{userProfile.name}</h1>
             <p className="text-base text-secondary mb-2">
-              Joined At {userProfile.joinedAt}
+              Joined On {userProfile.joinedAt}
             </p>
             <p className="flex items-center text-sm gap-2">
               <i className="text-lg text-secondary/70">

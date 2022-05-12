@@ -10,9 +10,7 @@ const AllRoutes = () => {
   const isLogged = useSelector((state) => {
     return state.isLogged;
   });
-  return (
-    <>{!isGlobalLoading && <>{isLogged ? <PrivateRoutes /> : <Auth />}</>}</>
-  );
+  return <>{<>{isLogged ? <PrivateRoutes /> : <Auth />}</>}</>;
 };
 
 export default AllRoutes;
