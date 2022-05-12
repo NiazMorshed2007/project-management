@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase/firebase";
 import { generateId } from "../../functions/idGenerator";
 import { generateLogoText } from "../../functions/LogoText";
+import { SetGlobalLoading } from "../../actions/index";
 
 const CreateOrganization = () => {
   const [name, setName] = useState("");

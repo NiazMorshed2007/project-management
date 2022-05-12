@@ -16,7 +16,6 @@ const CreateHeader = () => {
       <i onClick={goBack} className="text-2xl cursor-pointer">
         <MdOutlineClear />
       </i>
-      <p>{userProfile.uid}</p>
     </header>
   );
 };
