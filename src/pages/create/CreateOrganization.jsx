@@ -1,33 +1,48 @@
 import { Button } from "antd";
-import { doc, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  arrayUnion,
+  collection,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { SetGlobalLoading } from "../../actions";
 import { db } from "../../firebase/firebase";
 import { generateId } from "../../functions/idGenerator";
+import { generateLogoText } from "../../functions/LogoText";
 
 const CreateOrganization = () => {
   const [name, setName] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isGlobalLoading = useSelector((state) => {
-    return state.isGlobalLoading;
+  const userProfile = useSelector((state) => {
+    return state.userProfile;
   });
   const handleChange = (e) => {
     setName(e.target.value);
+    console.log(name);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (name !== "") {
       dispatch(SetGlobalLoading(true));
-      setDoc(
-        doc(db, "organizations", generateId(name), {
-          org_name: name,
-          org_id: generateId(name),
-          projects: [],
-        })
-      );
+      const org_data = {
+        org_name: name,
+        org_id: generateId(name),
+        org_logoText: generateLogoText(name),
+      };
+      await addDoc(collection(db, "organizations"), {
+        ...org_data,
+        projects: [],
+      });
+      await updateDoc(doc(db, "users", userProfile.uid), {
+        organizations: arrayUnion({
+          ...org_data,
+        }),
+      });
+      dispatch(SetGlobalLoading(false));
     }
   };
   return (

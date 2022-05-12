@@ -50,6 +50,7 @@ const SignUp = () => {
               displayName: user.displayName,
               name,
               email,
+              uid: user.uid,
               logoText: generateLogoText(name),
               avatar: user.photoURL,
               organizations: [

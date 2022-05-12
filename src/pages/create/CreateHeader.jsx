@@ -1,9 +1,13 @@
 import React from "react";
 import { MdOutlineClear } from "react-icons/md";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const CreateHeader = () => {
   const navigate = useNavigate();
+  const userProfile = useSelector((state) => {
+    return state.userProfile;
+  });
   const goBack = () => {
     navigate(-1);
   };
@@ -12,6 +16,7 @@ const CreateHeader = () => {
       <i onClick={goBack} className="text-2xl cursor-pointer">
         <MdOutlineClear />
       </i>
+      <p>{userProfile.uid}</p>
     </header>
   );
 };
