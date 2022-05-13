@@ -3,7 +3,7 @@ import CustomTabs from "../../components/CustomTabs";
 import Header from "../../layout/Header";
 
 const OrgHeader = (props) => {
-  const { id } = props;
+  const { id, org } = props;
   const [tabs, setTabs] = useState([]);
   useEffect(() => {
     setTabs([
@@ -15,7 +15,7 @@ const OrgHeader = (props) => {
     ]);
   }, []);
   return (
-    <Header head={"Organization title here"}>
+    <Header head={org && org.org_name}>
       <CustomTabs defaultActiveTabId={id} tabs={tabs} />
     </Header>
   );

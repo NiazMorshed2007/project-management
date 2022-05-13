@@ -11,6 +11,7 @@ import AllRoutes from "./routes/AllRoutes";
 const App = () => {
   const dispatch = useDispatch();
   const [uid, setUid] = useState("");
+  const [loading, setLoading] = useState(true);
   const isGlobalLoading = useSelector((state) => {
     return state.isGlobalLoading;
   });
@@ -36,16 +37,17 @@ const App = () => {
       } else {
         console.log("signed out");
         dispatch(setLogged(false));
+        setLoading(false);
         dispatch(SetGlobalLoading(false));
       }
     });
   }, []);
   useEffect(() => {
-    console.log(uid);
     if (uid !== "" && isLogged) {
       onSnapshot(doc(db, "users", uid), (doc) => {
         const data = doc.data();
         dispatch(setUserProfile(data));
+        setLoading(false);
         dispatch(SetGlobalLoading(false));
       });
     }
@@ -53,7 +55,7 @@ const App = () => {
   return (
     <>
       {isGlobalLoading && <Loader />}
-      <AllRoutes />
+      {!loading && <AllRoutes />}
     </>
   );
 };

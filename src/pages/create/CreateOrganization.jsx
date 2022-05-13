@@ -28,23 +28,27 @@ const CreateOrganization = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (name !== "") {
-      dispatch(SetGlobalLoading(true));
-      const org_data = {
-        org_name: name,
-        org_id: generateId(name),
-        org_logoText: generateLogoText(name),
-        owner_id: userProfile.uid,
-      };
-      await addDoc(collection(db, "organizations"), {
-        ...org_data,
-        projects: [],
-      });
-      await updateDoc(doc(db, "users", userProfile.uid), {
-        organizations: arrayUnion({
+      if (userProfile.organizations.length > 2) {
+        window.alert("Out of capactiy");
+      } else {
+        dispatch(SetGlobalLoading(true));
+        const org_data = {
+          org_name: name,
+          org_id: generateId(name),
+          org_logoText: generateLogoText(name),
+          owner_id: userProfile.uid,
+        };
+        await addDoc(collection(db, "organizations"), {
           ...org_data,
-        }),
-      });
-      dispatch(SetGlobalLoading(false));
+          projects: [],
+        });
+        await updateDoc(doc(db, "users", userProfile.uid), {
+          organizations: arrayUnion({
+            ...org_data,
+          }),
+        });
+        dispatch(SetGlobalLoading(false));
+      }
     }
   };
   return (
