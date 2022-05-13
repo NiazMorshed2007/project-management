@@ -14,7 +14,15 @@ import {
   setLogged,
   setUserProfile,
 } from "../../actions/index";
-import { doc, serverTimestamp, setDoc, Timestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  setDoc,
+  Timestamp,
+  updateDoc,
+} from "firebase/firestore";
 import { generateLogoText } from "../../functions/LogoText";
 import { getTime } from "../../functions/Time";
 import { generateId } from "../../functions/idGenerator";
@@ -46,6 +54,12 @@ const SignUp = () => {
           displayName: name,
         })
           .then(async () => {
+            const org_data = {
+              org_name: name + "'s Organization",
+              org_id: generateId(name + "'s Organization"),
+              org_logoText: generateLogoText(name + "'s Organization"),
+              owner_id: user.uid,
+            };
             await setDoc(doc(db, "users", user.uid), {
               displayName: user.displayName,
               name,
@@ -55,21 +69,18 @@ const SignUp = () => {
               avatar: user.photoURL,
               organizations: [
                 {
-                  org_name: name + "'s Organization",
-                  org_id: generateId(name + "'s Organization"),
-                  org_logo: null,
-                  org_logoText: generateLogoText(name + "'s Organization"),
+                  ...org_data,
                 },
               ],
               joinedAt: getTime("m/d/y"),
-            })
-              .then(() => {
-                navigate("/u/overview");
-                SetGlobalLoading(false);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
+            });
+            await addDoc(collection(db, "organizations"), {
+              ...org_data,
+              org_avatar: null,
+              projects: [],
+            });
+            navigate("/u/overview");
+            SetGlobalLoading(false);
           })
           .catch((err) => {
             console.log(err);

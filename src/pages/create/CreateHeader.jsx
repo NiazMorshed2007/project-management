@@ -12,7 +12,7 @@ const CreateHeader = () => {
     navigate(-1);
   };
   return (
-    <header className="flex fixed w-full p-7 border-b border-gray-200 items-center justify-end">
+    <header className="flex bg-white z-10 fixed w-full p-7 border-b border-gray-200 items-center justify-end">
       <i onClick={goBack} className="text-2xl cursor-pointer">
         <MdOutlineClear />
       </i>

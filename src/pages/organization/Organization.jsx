@@ -48,7 +48,7 @@ const Organization = () => {
     <Layout>
       <OrgHeader org={org} id={id} />
       <Main>
-        <OrgOverview org={org} />
+        <OrgOverview current_orgId={url_org_id} org={org} />
       </Main>
     </Layout>
   );

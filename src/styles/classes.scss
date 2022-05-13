@@ -17,7 +17,7 @@
 .primary-btn-unfilled {
   @extend .primary-btn;
   @apply bg-white text-brand;
-  padding: 3px 13px;
+  padding: 1px 13px;
 
   &:hover,
   &:focus {
@@ -41,12 +41,32 @@
 }
 
 .label-inp {
-  @apply relative w-full;
+  @apply relative w-full mb-7;
+
+  .ant-select {
+    @apply border-transparent;
+    .ant-select-selector {
+      @apply border-transparent p-0 border-b-secondary/40;
+      &:hover,
+      &:focus {
+        @apply border-transparent border-b-brand;
+      }
+      .ant-select-selection-search {
+        @apply left-0;
+      }
+    }
+  }
+  .ant-select-focused {
+    .ant-select-selector {
+      box-shadow: none !important;
+      border: transparent !important;
+    }
+  }
   .anim-label {
     @apply text-sm -top-6;
   }
   input {
-    @apply border-b hover:border-brand p-1 pl-0 w-full mb-9 border-secondary/40 outline-none;
+    @apply border-b hover:border-brand p-1 pl-0 w-full border-secondary/40 outline-none;
     &:focus {
       @apply border-brand;
     }
@@ -61,6 +81,9 @@
   label {
     @apply text-lg absolute text-secondary/70 top-0 left-0 pointer-events-none;
     transition: all 0.25s ease-in-out;
+  }
+  .head {
+    @apply text-lg text-secondary/70;
   }
   i {
     @apply absolute top-1 right-0 text-base;

@@ -40,6 +40,7 @@ const CreateOrganization = () => {
         };
         await addDoc(collection(db, "organizations"), {
           ...org_data,
+          org_avatar: null,
           projects: [],
         });
         await updateDoc(doc(db, "users", userProfile.uid), {
@@ -52,7 +53,7 @@ const CreateOrganization = () => {
     }
   };
   return (
-    <div className=" flex h-screen justify-center flex-col px-32 w-full">
+    <>
       <h1 className="text-4xl">Create Organization</h1>
       <form onSubmit={handleSubmit} className="mt-16 w-full">
         <div className="label-inp w-full">
@@ -82,7 +83,7 @@ const CreateOrganization = () => {
           </Button>
         </div>
       </form>
-    </div>
+    </>
   );
 };
 

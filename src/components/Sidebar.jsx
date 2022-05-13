@@ -27,7 +27,7 @@ const Sidebar = () => {
       onClick={hideSidebar}
       className={`fixed w-screen h-screen ${
         isOpenedSidebar ? "pointer-events-auto" : "pointer-events-none"
-      } z-10`}
+      } z-20`}
     >
       <aside
         ref={sideBarRef}
@@ -76,7 +76,9 @@ const Sidebar = () => {
                       label: "Add Project",
                       key: "add_project",
                       onClick: () => {
-                        navigate("/c/project");
+                        navigate(
+                          `/c/project/${userProfile.organizations[0].org_id}`
+                        );
                       },
                     },
                     {
