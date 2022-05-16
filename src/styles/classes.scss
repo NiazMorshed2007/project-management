@@ -44,7 +44,7 @@
   @apply relative w-full mb-7;
 
   .ant-select {
-    @apply border-transparent;
+    @apply border-b-gray-200;
     .ant-select-selector {
       @apply border-transparent p-0 border-b-secondary/40;
       &:hover,
@@ -59,7 +59,8 @@
   .ant-select-focused {
     .ant-select-selector {
       box-shadow: none !important;
-      border: transparent !important;
+      border-color: transparent !important;
+      border-bottom-color: rgb(24 29 37 / 0.4) !important;
     }
   }
   .anim-label {

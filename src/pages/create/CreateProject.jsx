@@ -1,5 +1,5 @@
 import { Button, Select } from "antd";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -8,6 +8,7 @@ const { Option } = Select;
 const CreateProject = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [org, setOrg] = useState({});
   const handleChange = () => {};
   const handleSubmit = () => [];
   const userProfile = useSelector((state) => {
@@ -21,8 +22,11 @@ const CreateProject = () => {
     console.log("search:", val);
   }
   useEffect(() => {
-    // const get
-  }, [id]);
+    const temp_org = userProfile.organizations.find((org) => {
+      return org.org_id === id;
+    });
+    setOrg(temp_org);
+  }, []);
   return (
     <>
       <h1 className="text-4xl">Create Project</h1>
@@ -43,11 +47,11 @@ const CreateProject = () => {
           <span className="head">Organization</span>
           <Select
             showSearch
-            placeholder="Select a person"
+            placeholder="Select a organization"
             optionFilterProp="children"
             onChange={onChange}
             onSearch={onSearch}
-            defaultValue={id.toLocaleUpperCase()}
+            defaultValue={org.org_name}
             filterOption={(input, option) =>
               option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }
@@ -57,9 +61,6 @@ const CreateProject = () => {
                 {org.org_name}
               </Option>
             ))}
-            {/* <Option value="jack">Jack</Option>
-          <Option value="lucy">Lucy</Option>
-          <Option value="tom">Tom</Option> */}
           </Select>
         </div>
         <div className="label-inp">
