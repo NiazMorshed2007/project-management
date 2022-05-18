@@ -54,7 +54,18 @@ const OrgOverview = (props) => {
                 ) : (
                   <>
                     {org.projects.map((project) => (
-                      <div>{project.project_name}</div>
+                      <div key={project.project_id}>
+                        <p
+                          onClick={() => {
+                            navigate(
+                              `/w/p/overview?orgId=${org.org_id}&projectId=${project.project_id}&active_tabId=overview`
+                            );
+                          }}
+                          className="transition-all hover:text-brand cursor-pointer"
+                        >
+                          {project.project_name}
+                        </p>
+                      </div>
                     ))}
                   </>
                 )}

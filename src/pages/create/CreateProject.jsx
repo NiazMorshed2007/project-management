@@ -17,6 +17,7 @@ import { SetGlobalLoading } from "../../actions";
 import { db } from "../../firebase/firebase";
 import { generateId } from "../../functions/idGenerator";
 import { generateLogoText } from "../../functions/LogoText";
+import { getTime } from "../../functions/Time";
 
 const { Option } = Select;
 
@@ -50,6 +51,7 @@ const CreateProject = () => {
     await addDoc(collection(db, "projects"), {
       ...project_data,
       parent_org_id: org.org_id,
+      createdOn: getTime("m/d/y"),
       owner_id: userProfile.uid,
     });
     await updateDoc(doc(db, "organizations", docId), {
