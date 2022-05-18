@@ -6,33 +6,26 @@ const { TabPane } = Tabs;
 
 const CustomTabs = (props) => {
   const { tabs, defaultActiveTabId } = props;
-  const [activeTab, setActiveTab] = useState("");
+  const [activeTab, setActiveTab] = useState(defaultActiveTabId);
   const navigate = useNavigate();
-  const tabRef = useRef();
+  const tabRef = useRef([]);
   const setActiveKey = (key) => {
     setActiveTab(key);
   };
-  console.log(tabRef);
-  // useEffect(() => {
-  //   setInkWidth(tabRef.current.offsetWidth);
-  // }, [activeTab]);
-  useEffect(() => {
-    setActiveTab(defaultActiveTabId);
-  }, [defaultActiveTabId]);
   return (
     <>
       <div className="tabs-wrapper relative flex items-center gap-4">
-        {tabs.map((tab) => (
+        {tabs.map((tab, i) => (
           <div
-            ref={tabRef}
+            ref={(el) => (tabRef.current[i] = el)}
             onClick={() => {
               setActiveKey(tab.id);
               navigate(tab.link);
             }}
             style={{ ...tab.style }}
             className={`tab ${tab.id} ${
-              activeTab === tab.id && "active-tab font-semibold"
-            } cursor-pointer`}
+              activeTab === tab.id && "active-tab border-b-brand font-semibold"
+            } cursor-pointer border-transparent border-b-2`}
             key={tab.id}
           >
             <p className=" capitalize">{tab.name}</p>

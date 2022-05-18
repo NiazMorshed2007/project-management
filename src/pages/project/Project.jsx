@@ -1,15 +1,23 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { SetGlobalLoading } from "../../actions";
 import { db } from "../../firebase/firebase";
 import Layout from "../../layout/Layout";
 import Main from "../../layout/Main";
 import ProjectHeader from "./ProjectHeader";
+import ProjectLists from "./ProjectLists";
 import ProjectOverview from "./ProjectOverview";
 
 const Project = () => {
+  const { id } = useParams();
   const [project, setProject] = useState([]);
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -20,7 +28,14 @@ const Project = () => {
   });
   const url_org_id = params.get("orgId");
   const url_project_id = params.get("projectId");
-  const tabId = params.get("active_tabId");
+  const renderChain = (Routeid) => {
+    switch (Routeid) {
+      case "overview":
+        return <ProjectOverview project={project} />;
+      default:
+        return <ProjectLists />;
+    }
+  };
   useEffect(() => {
     const e_project = [];
     const q = query(
@@ -42,15 +57,8 @@ const Project = () => {
   }, [url_org_id, url_project_id]);
   return (
     <Layout>
-      <ProjectHeader tabId={tabId} project={project && project} />
-      <Main>
-        <Routes>
-          <Route
-            path="overview"
-            element={<ProjectOverview project={project} />}
-          />
-        </Routes>
-      </Main>
+      <ProjectHeader tabId={id} project={project && project} />
+      <Main>{renderChain(id)}</Main>
     </Layout>
   );
 };
