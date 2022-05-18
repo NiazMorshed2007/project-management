@@ -12,7 +12,7 @@ const PrivateRoutes = () => {
         <Route path="/u/:id" element={<Home />} />
         <Route path="/c/*" element={<Create />} />
         <Route path="/w/o/:id" element={<Organization />} />
-        <Route path="/w/p/*" element={<Project />} />
+        <Route path="/w/p/:id/*" element={<Project />} />
       </Routes>
     </>
   );
