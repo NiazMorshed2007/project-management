@@ -58,7 +58,7 @@ const OrgOverview = (props) => {
                         <p
                           onClick={() => {
                             navigate(
-                              `/w/p/overview?orgId=${org.org_id}&projectId=${project.project_id}&active_tabId=overview`
+                              `/w/p/overview?orgId=${org.org_id}&projectId=${project.project_id}`
                             );
                           }}
                           className="transition-all hover:text-brand cursor-pointer"

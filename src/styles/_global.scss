@@ -1,0 +1,7 @@
+kbd {
+  padding: 2px 7px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  @apply text-center border text-secondary border-gray-200 bg-gray-100 rounded-md;
+}
