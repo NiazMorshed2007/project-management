@@ -1,8 +1,5 @@
-import { Tabs } from "antd";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-const { TabPane } = Tabs;
 
 const CustomTabs = (props) => {
   const { tabs, defaultActiveTabId } = props;

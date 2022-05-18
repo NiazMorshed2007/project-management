@@ -18,6 +18,7 @@ import ProjectOverview from "./ProjectOverview";
 
 const Project = () => {
   const { id } = useParams();
+  const [org, setOrg] = useState([]);
   const [project, setProject] = useState([]);
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -55,9 +56,15 @@ const Project = () => {
     };
     getData();
   }, [url_org_id, url_project_id]);
+  useEffect(() => {
+    const filteredrg = userProfile.organizations.find((org) => {
+      return org.org_id === url_org_id;
+    });
+    setOrg(filteredrg);
+  }, [url_org_id]);
   return (
     <Layout>
-      <ProjectHeader tabId={id} project={project && project} />
+      <ProjectHeader org={org} tabId={id} project={project && project} />
       <Main>{renderChain(id)}</Main>
     </Layout>
   );
