@@ -13,6 +13,7 @@ import { db } from "../../firebase/firebase";
 import { generateId } from "../../functions/idGenerator";
 import { generateLogoText } from "../../functions/LogoText";
 import { SetGlobalLoading } from "../../actions/index";
+import { getTime } from "../../functions/Time";
 
 const CreateOrganization = () => {
   const [name, setName] = useState("");
@@ -40,6 +41,7 @@ const CreateOrganization = () => {
         };
         await addDoc(collection(db, "organizations"), {
           ...org_data,
+          createdOn: getTime("m/d/y"),
           org_avatar: null,
           projects: [],
         });

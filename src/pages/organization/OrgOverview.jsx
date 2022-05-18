@@ -31,7 +31,7 @@ const OrgOverview = (props) => {
                 </p>
                 <h1 className="text-4xl mb-1">{org.org_name}</h1>
                 <p className="text-base text-secondary mb-2">
-                  Created at hgfsjfs
+                  Created on {org.createdOn}
                 </p>
               </>
             }
