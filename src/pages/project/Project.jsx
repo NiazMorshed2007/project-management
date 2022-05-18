@@ -32,7 +32,7 @@ const Project = () => {
   const renderChain = (Routeid) => {
     switch (Routeid) {
       case "overview":
-        return <ProjectOverview project={project} />;
+        return <ProjectOverview org={org} project={project} />;
       default:
         return <ProjectLists />;
     }

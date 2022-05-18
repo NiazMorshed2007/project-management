@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import CustomTabs from "../../components/CustomTabs";
 import Header from "../../layout/Header";
-import { BsBuilding, BsPencil } from "react-icons/bs";
-import { FiChevronDown, FiBook } from "react-icons/fi";
+import { BsBuilding, BsPencil, BsTrash, BsCircle, BsTags, BsFullscreen } from "react-icons/bs";
+import {BiUser, BiMessageRounded} from 'react-icons/bi';
+import { FiChevronDown, FiBook, FiEye, FiSettings } from "react-icons/fi";
 
 const ProjectHeader = (props) => {
   const { project, org, tabId } = props;
@@ -63,9 +64,63 @@ const ProjectHeader = (props) => {
                       },
                       {
                         label: "Edit Name and Description",
-                        key: "edit",
+                        key: "edit_name&des",
                         icon: <BsPencil />,
                       },
+                      {
+                        label: "Edit members",
+                        key: 'edit_member',
+                        icon: <BiUser />
+                      },
+                      {
+                        label: "Edit statuses",
+                        key: 'edit_statuses',
+                        icon: <BsCircle />
+                      },
+                      {
+                        label: 'Edit tags',
+                        key: 'edit_tags',
+                        icon: <BsTags />
+                      },
+                      {
+                        type: "divider",
+                      },
+                      {
+                        label: <div className="flex items-center justify-between">
+                          <p className="m-0">Enter full screen</p>
+                          <div>
+                            <kbd>Ctrl</kbd>+<kbd>.</kbd>
+                          </div>
+                        </div>,
+                        icon: <BsFullscreen />,
+                        key: 'full_screen'
+                      },
+                      {
+                        type: "divider",
+                      },
+                      {
+                        label: 'Follow',
+                        key: 'follow',
+                        icon: <FiEye />
+                      },
+                      {
+                        label: 'Comment',
+                        key: 'comment',
+                        icon: <BiMessageRounded />
+                      },
+                      {
+                        type: 'divider'
+                      },
+                      {
+                        label: 'Delete',
+                        key: 'delete',
+                        icon: <BsTrash />
+                      },
+                      {
+                        label: 'Options',
+                        key: 'options',
+                        icon: <FiSettings />
+                      }
                     ]}
                   />
                 }
