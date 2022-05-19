@@ -29,3 +29,17 @@
 .ant-select {
   @apply w-full;
 }
+
+.ant-modal-root {
+  .ant-modal-mask {
+    @apply bg-white/25 backdrop-blur-sm;
+  }
+  .ant-modal-wrap {
+    .add-sublist-modal {
+      width: 690px !important;
+    }
+    .ant-modal-content {
+      @apply rounded-xl;
+    }
+  }
+}

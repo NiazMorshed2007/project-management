@@ -14,6 +14,11 @@
   }
 }
 
+.primary-btn-pdsm {
+  @extend .primary-btn;
+  padding: 1px 13px;
+}
+
 .primary-btn-unfilled {
   @extend .primary-btn;
   @apply bg-white text-brand;

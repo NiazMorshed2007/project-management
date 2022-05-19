@@ -1,4 +1,4 @@
-import { Dropdown, Menu } from "antd";
+import { Button, Dropdown, Form, Input, Menu, Modal } from "antd";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import CustomTabs from "../../components/CustomTabs";
@@ -15,27 +15,61 @@ import {
 } from "react-icons/bs";
 import { BiUser, BiMessageRounded } from "react-icons/bi";
 import { FiChevronDown, FiBook, FiEye, FiSettings } from "react-icons/fi";
+import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
+import { generateId } from "../../functions/idGenerator";
+import { useDispatch } from "react-redux";
+import { SetGlobalLoading } from "../../actions";
 
 const ProjectHeader = (props) => {
-  const { project, org, tabId } = props;
+  const { project, serverId, org, tabId } = props;
+  const [form] = Form.useForm();
   const location = useLocation();
+  const dispatch = useDispatch();
+  const [addModal, setAddModal] = useState(false);
   const navigate = useNavigate();
   const location_params = location.search;
   const [tabs, setTabs] = useState([]);
+  const showAddModal = () => {
+    setAddModal(true);
+  };
+  const closeAddModal = () => {
+    setAddModal(false);
+  };
+  const handleAddSublist = async (values) => {
+    dispatch(SetGlobalLoading(true));
+    await updateDoc(doc(db, "projects", serverId), {
+      tabs: arrayUnion({
+        name: values.name,
+        id: generateId(values.name),
+        link: `/w/p/${generateId(values.name)}${location_params}`,
+      }),
+    })
+      .then(() => {
+        dispatch(SetGlobalLoading(false));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   useEffect(() => {
-    setTabs([
-      {
-        name: "Lists",
-        id: "lists",
-        link: `/w/p/lists${location_params}`,
-      },
-      {
-        name: "Overview",
-        id: "overview",
-        link: `/w/p/overview${location_params}`,
-      },
-    ]);
-  }, []);
+    if (project && project.tabs) {
+      const project_sublists = [...project.tabs];
+      setTabs([
+        {
+          name: "Lists",
+          id: "lists",
+          link: `/w/p/lists${location_params}`,
+        },
+        {
+          name: "Overview",
+          id: "overview",
+          link: `/w/p/overview${location_params}`,
+        },
+        ...project_sublists,
+      ]);
+    }
+  }, [project]);
   return (
     <Header
       head={
@@ -154,8 +188,12 @@ const ProjectHeader = (props) => {
                 className="line bg-gray-300 mr-3"
               ></div>
               <div
+                onClick={showAddModal}
                 className={`flex items-center add-sublist cursor-pointer ${
-                  project.tabs.length < 1 && "show-text"
+                  project &&
+                  project.tabs &&
+                  project.tabs.length < 1 &&
+                  "show-text"
                 }`}
               >
                 <RiAddCircleFill className="text-md text-gray-500" />
@@ -167,6 +205,43 @@ const ProjectHeader = (props) => {
         defaultActiveTabId={tabId}
         tabs={tabs}
       />
+
+      <Modal
+        closeIcon={<></>}
+        className="add-sublist-modal"
+        footer={false}
+        visible={addModal}
+        onCancel={closeAddModal}
+      >
+        <h2 className=" text-2xl">Create Sublist</h2>
+        <Form form={form} onFinish={handleAddSublist}>
+          <Form.Item
+            label={"Name"}
+            name={"name"}
+            rules={[
+              { required: true, message: "Please input your Sublist Name!" },
+            ]}
+          >
+            <Input placeholder="name" />
+          </Form.Item>
+          <Form.Item>
+            <div className="flex items-center justify-end gap-3">
+              <Button htmlType="submit" className=" primary-btn-pdsm">
+                Create
+              </Button>
+              <Button
+                onClick={() => {
+                  navigate(-1);
+                }}
+                htmlType="cancel"
+                className="default-btn-unfilled"
+              >
+                Cancel
+              </Button>
+            </div>
+          </Form.Item>
+        </Form>
+      </Modal>
     </Header>
   );
 };
