@@ -1,19 +1,7 @@
-import {
-  collection,
-  getDocs,
-  onSnapshot,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { SetGlobalLoading } from "../../actions";
 import { db } from "../../firebase/firebase";
 import Layout from "../../layout/Layout";
@@ -27,6 +15,7 @@ const Project = () => {
   const [org, setOrg] = useState([]);
   const [project, setProject] = useState([]);
   const [project_serverId, setProjectServerId] = useState("");
+  const [tasks, setTasks] = useState([]);
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const navigate = useNavigate();
@@ -44,7 +33,7 @@ const Project = () => {
       case "overview":
         return <ProjectOverview org={org} project={project} />;
       default:
-        return <ProjectLists />;
+        return <ProjectLists tasks={tasks} />;
     }
   };
   useEffect(() => {
@@ -71,6 +60,29 @@ const Project = () => {
     });
     setOrg(filteredrg);
   }, [url_org_id]);
+  useEffect(() => {
+    if (project && project.tabs) {
+      const tabs = [];
+      tabs.push(...project.tabs);
+      switch (id) {
+        case "lists":
+          {
+            const all_tasks = [];
+            tabs.map((tab) => {
+              all_tasks.push(tab.tasks);
+            });
+            setTasks(...all_tasks);
+          }
+          break;
+        default:
+          {
+            setTasks([]);
+          }
+          break;
+      }
+    }
+    // console.log(project.tabs);
+  }, [id, project]);
   return (
     <Layout>
       <ProjectHeader

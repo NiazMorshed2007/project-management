@@ -43,6 +43,7 @@ const ProjectHeader = (props) => {
         name: values.name,
         id: generateId(values.name),
         link: `/w/p/${generateId(values.name)}`,
+        tasks: [],
       }),
     })
       .then(() => {
