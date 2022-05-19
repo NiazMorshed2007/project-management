@@ -3,8 +3,17 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import CustomTabs from "../../components/CustomTabs";
 import Header from "../../layout/Header";
-import { BsBuilding, BsPencil, BsTrash, BsCircle, BsTags, BsFullscreen } from "react-icons/bs";
-import {BiUser, BiMessageRounded} from 'react-icons/bi';
+import { RiAddCircleFill } from "react-icons/ri";
+
+import {
+  BsBuilding,
+  BsPencil,
+  BsTrash,
+  BsCircle,
+  BsTags,
+  BsFullscreen,
+} from "react-icons/bs";
+import { BiUser, BiMessageRounded } from "react-icons/bi";
 import { FiChevronDown, FiBook, FiEye, FiSettings } from "react-icons/fi";
 
 const ProjectHeader = (props) => {
@@ -69,63 +78,65 @@ const ProjectHeader = (props) => {
                       },
                       {
                         label: "Edit members",
-                        key: 'edit_member',
-                        icon: <BiUser />
+                        key: "edit_member",
+                        icon: <BiUser />,
                       },
                       {
                         label: "Edit statuses",
-                        key: 'edit_statuses',
-                        icon: <BsCircle />
+                        key: "edit_statuses",
+                        icon: <BsCircle />,
                       },
                       {
-                        label: 'Edit tags',
-                        key: 'edit_tags',
-                        icon: <BsTags />
+                        label: "Edit tags",
+                        key: "edit_tags",
+                        icon: <BsTags />,
                       },
                       {
                         type: "divider",
                       },
                       {
-                        label: <div className="flex items-center justify-between">
-                          <p className="m-0">Enter full screen</p>
-                          <div>
-                            <kbd>Ctrl</kbd>+<kbd>.</kbd>
+                        label: (
+                          <div className="flex items-center justify-between">
+                            <p className="m-0">Enter full screen</p>
+                            <div>
+                              <kbd>Ctrl</kbd>+<kbd>.</kbd>
+                            </div>
                           </div>
-                        </div>,
+                        ),
                         icon: <BsFullscreen />,
-                        key: 'full_screen'
+                        key: "full_screen",
                       },
                       {
                         type: "divider",
                       },
                       {
-                        label: 'Follow',
-                        key: 'follow',
-                        icon: <FiEye />
+                        label: "Follow",
+                        key: "follow",
+                        icon: <FiEye />,
                       },
                       {
-                        label: 'Comment',
-                        key: 'comment',
-                        icon: <BiMessageRounded />
+                        label: "Comment",
+                        key: "comment",
+                        icon: <BiMessageRounded />,
                       },
                       {
-                        type: 'divider'
+                        type: "divider",
                       },
                       {
-                        label: 'Delete',
-                        key: 'delete',
-                        icon: <BsTrash />
+                        label: "Delete",
+                        key: "delete",
+                        icon: <BsTrash />,
                       },
                       {
-                        label: 'Options',
-                        key: 'options',
-                        icon: <FiSettings />
-                      }
+                        label: "Options",
+                        key: "options",
+                        icon: <FiSettings />,
+                      },
                     ]}
                   />
                 }
               >
-                <i className=" cursor-pointer">
+                <i>
                   <FiChevronDown />
                 </i>
               </Dropdown>
@@ -134,7 +145,28 @@ const ProjectHeader = (props) => {
         )
       }
     >
-      <CustomTabs defaultActiveTabId={tabId} tabs={tabs} />
+      <CustomTabs
+        addingOption={
+          <>
+            <div className=" flex items-center gap-1">
+              <div
+                style={{ width: "1px", height: "20px" }}
+                className="line bg-gray-300 mr-3"
+              ></div>
+              <div
+                className={`flex items-center add-sublist cursor-pointer ${
+                  project.tabs.length < 1 && "show-text"
+                }`}
+              >
+                <RiAddCircleFill className="text-md text-gray-500" />
+                <p>Add sublist</p>
+              </div>
+            </div>
+          </>
+        }
+        defaultActiveTabId={tabId}
+        tabs={tabs}
+      />
     </Header>
   );
 };

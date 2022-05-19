@@ -30,12 +30,17 @@ const ProjectOverview = (props) => {
                 </p>
                 <h1 className="text-4xl mb-1">{project.project_name}</h1>
                 <div className="flex items-center gap-2">
-                <p className="m-0 text-base cursor-pointer transition-all hover:text-brand" onClick={() => {
-                    navigate(`/w/o/overview?orgId=${org.org_id}`)
-                }}>{org.org_name}</p>
-                <li className="text-base text-secondary">
-                  Created on {project.createdOn}
-                </li>
+                  <p
+                    className="m-0 text-base cursor-pointer transition-all hover:text-brand"
+                    onClick={() => {
+                      navigate(`/w/o/overview?orgId=${org.org_id}`);
+                    }}
+                  >
+                    {org.org_name}
+                  </p>
+                  <li className="text-base text-secondary">
+                    Created on {project.createdOn}
+                  </li>
                 </div>
               </>
             }
@@ -49,6 +54,62 @@ const ProjectOverview = (props) => {
           />
         </>
       )}
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum obcaecati
+      ratione sit molestiae ut excepturi doloremque officiis, voluptatum iure
+      necessitatibus laborum dolorem porro, nemo odit soluta impedit sunt, vitae
+      distinctio. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      Nostrum obcaecati ratione sit molestiae ut excepturi doloremque officiis,
+      voluptatum iure necessitatibus laborum dolorem porro, nemo odit soluta
+      impedit sunt, vitae distinctio. Lorem ipsum dolor sit amet consectetur
+      adipisicing elit. Nostrum obcaecati ratione sit molestiae ut excepturi
+      doloremque officiis, voluptatum iure necessitatibus laborum dolorem porro,
+      nemo odit soluta impedit sunt, vitae distinctio. Lorem ipsum dolor sit
+      amet consectetur adipisicing elit. Nostrum obcaecati ratione sit molestiae
+      ut excepturi doloremque officiis, voluptatum iure necessitatibus laborum
+      dolorem porro, nemo odit soluta impedit sunt, vitae distinctio. Lorem
+      ipsum dolor sit amet consectetur adipisicing elit. Nostrum obcaecati
+      ratione sit molestiae ut excepturi doloremque officiis, voluptatum iure
+      necessitatibus laborum dolorem porro, nemo odit soluta impedit sunt, vitae
+      distinctio. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      Nostrum obcaecati ratione sit molestiae ut excepturi doloremque officiis,
+      voluptatum iure necessitatibus laborum dolorem porro, nemo odit soluta
+      impedit sunt, vitae distinctio. Lorem ipsum dolor sit amet consectetur
+      adipisicing elit. Nostrum obcaecati ratione sit molestiae ut excepturi
+      doloremque officiis, voluptatum iure necessitatibus laborum dolorem porro,
+      nemo odit soluta impedit sunt, vitae distinctio. Lorem ipsum dolor sit
+      amet consectetur adipisicing elit. Nostrum obcaecati ratione sit molestiae
+      ut excepturi doloremque officiis, voluptatum iure necessitatibus laborum
+      dolorem porro, nemo odit soluta impedit sunt, vitae distinctio. Lorem
+      ipsum dolor sit amet consectetur adipisicing elit. Nostrum obcaecati
+      ratione sit molestiae ut excepturi doloremque officiis, voluptatum iure
+      necessitatibus laborum dolorem porro, nemo odit soluta impedit sunt, vitae
+      distinctio. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      Nostrum obcaecati ratione sit molestiae ut excepturi doloremque officiis,
+      voluptatum iure necessitatibus laborum dolorem porro, nemo odit soluta
+      impedit sunt, vitae distinctio. Lorem ipsum dolor sit amet consectetur
+      adipisicing elit. Nostrum obcaecati ratione sit molestiae ut excepturi
+      doloremque officiis, voluptatum iure necessitatibus laborum dolorem porro,
+      nemo odit soluta impedit sunt, vitae distinctio. Lorem ipsum dolor sit
+      amet consectetur adipisicing elit. Nostrum obcaecati ratione sit molestiae
+      ut excepturi doloremque officiis, voluptatum iure necessitatibus laborum
+      dolorem porro, nemo odit soluta impedit sunt, vitae distinctio. Lorem
+      ipsum dolor sit amet consectetur adipisicing elit. Nostrum obcaecati
+      ratione sit molestiae ut excepturi doloremque officiis, voluptatum iure
+      necessitatibus laborum dolorem porro, nemo odit soluta impedit sunt, vitae
+      distinctio. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      Nostrum obcaecati ratione sit molestiae ut excepturi doloremque officiis,
+      voluptatum iure necessitatibus laborum dolorem porro, nemo odit soluta
+      impedit sunt, vitae distinctio. Lorem ipsum dolor sit amet consectetur
+      adipisicing elit. Nostrum obcaecati ratione sit molestiae ut excepturi
+      doloremque officiis, voluptatum iure necessitatibus laborum dolorem porro,
+      nemo odit soluta impedit sunt, vitae distinctio. Lorem ipsum dolor sit
+      amet consectetur adipisicing elit. Nostrum obcaecati ratione sit molestiae
+      ut excepturi doloremque officiis, voluptatum iure necessitatibus laborum
+      dolorem porro, nemo odit soluta impedit sunt, vitae distinctio. Lorem
+      ipsum dolor sit amet consectetur adipisicing elit. Nostrum obcaecati
+      ratione sit molestiae ut excepturi doloremque officiis, voluptatum iure
+      necessitatibus laborum dolorem porro, nemo odit soluta impedit sunt, vitae
+      distinctio.
     </>
   );
 };

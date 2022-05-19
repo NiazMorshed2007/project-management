@@ -18,7 +18,7 @@ const Header = (props) => {
     dispatch(setOpenedSidebar(true));
   };
   return (
-    <header className="main-header bg-white z-10 p-5 pr-3 pl-7 pb-0 w-full sticky top-0 border-b">
+    <header className="main-header bg-white/90 backdrop-blur-xl z-10 p-5 pr-3 pl-7 pb-0 w-full sticky top-0 border-b">
       <div className="upper flex items-center justify-between">
         <div className="left flex items-center gap-4">
           <div onClick={showSidebar} className="burger cursor-pointer">

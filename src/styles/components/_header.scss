@@ -1,5 +1,15 @@
 .main-header {
   height: 100px;
+  &:hover {
+    .down {
+      .show-text {
+        p {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+    }
+  }
   p {
     margin: 0;
   }
@@ -12,9 +22,12 @@
           height: 2px;
         }
       }
-      svg {
-        font-size: 15px;
-        @apply text-gray-500;
+      i {
+        @apply cursor-pointer;
+        svg {
+          font-size: 15px;
+          @apply text-gray-500;
+        }
       }
     }
     .right {
@@ -27,6 +40,13 @@
   .down {
     p {
       @apply m-0 p-1;
+    }
+    .add-sublist {
+      p {
+        opacity: 0;
+        visibility: hidden;
+        transition: all .3s ease-in-out;
+      }
     }
   }
 }

@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const CustomTabs = (props) => {
-  const { tabs, defaultActiveTabId } = props;
+  const { tabs, defaultActiveTabId, addingOption } = props;
   const [activeTab, setActiveTab] = useState(defaultActiveTabId);
   const navigate = useNavigate();
   const tabRef = useRef([]);
@@ -28,9 +28,9 @@ const CustomTabs = (props) => {
             <p className=" capitalize">{tab.name}</p>
           </div>
         ))}
+        {addingOption}
         <div
           style={{
-            // width: currnetTab ? tabRef.current.offsetWidth : "20px",
             height: "1px",
           }}
           className="ink-bar absolute bg-brand left-0 bottom-0"

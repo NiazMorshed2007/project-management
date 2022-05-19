@@ -1,5 +1,6 @@
 import { Button, Tooltip } from "antd";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import {
   AiOutlineEye,
@@ -8,24 +9,11 @@ import {
 } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { SetGlobalLoading, setLogged } from "../../actions/index";
 import { auth, db } from "../../firebase/firebase";
-import {
-  SetGlobalLoading,
-  setLogged,
-  setUserProfile,
-} from "../../actions/index";
-import {
-  addDoc,
-  collection,
-  doc,
-  serverTimestamp,
-  setDoc,
-  Timestamp,
-  updateDoc,
-} from "firebase/firestore";
+import { generateId } from "../../functions/idGenerator";
 import { generateLogoText } from "../../functions/LogoText";
 import { getTime } from "../../functions/Time";
-import { generateId } from "../../functions/idGenerator";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -59,6 +47,7 @@ const SignUp = () => {
               org_id: generateId(name + "'s Organization"),
               org_logoText: generateLogoText(name + "'s Organization"),
               owner_id: user.uid,
+              createdOn: getTime("m/d/y"),
             };
             await setDoc(doc(db, "users", user.uid), {
               displayName: user.displayName,
