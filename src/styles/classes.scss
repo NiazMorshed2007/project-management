@@ -19,6 +19,18 @@
   padding: 1px 13px;
 }
 
+.danger-btn-pdsm {
+  @extend .primary-btn-pdsm;
+  @apply bg-danger border-danger shadow-danger;
+  &:hover,
+  &:focus {
+    @apply bg-danger/80 border-danger text-btnColor;
+  }
+  &:focus {
+    @apply bg-danger;
+  }
+}
+
 .primary-btn-unfilled {
   @extend .primary-btn;
   @apply bg-white text-brand;

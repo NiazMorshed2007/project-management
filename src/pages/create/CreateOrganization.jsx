@@ -14,9 +14,11 @@ import { generateId } from "../../functions/idGenerator";
 import { generateLogoText } from "../../functions/LogoText";
 import { SetGlobalLoading } from "../../actions/index";
 import { getTime } from "../../functions/Time";
+import OutOfCapaticyModal from "../../components/OutOfCapaticyModal";
 
 const CreateOrganization = () => {
   const [name, setName] = useState("");
+  const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userProfile = useSelector((state) => {
@@ -30,7 +32,7 @@ const CreateOrganization = () => {
     e.preventDefault();
     if (name !== "") {
       if (userProfile.organizations.length > 2) {
-        window.alert("Out of capactiy");
+        setVisible(true);
       } else {
         dispatch(SetGlobalLoading(true));
         const org_data = {
@@ -50,6 +52,7 @@ const CreateOrganization = () => {
             ...org_data,
           }),
         });
+        navigate(`/w/o/overview?orgId=${org_data.org_id}`);
         dispatch(SetGlobalLoading(false));
       }
     }
@@ -85,6 +88,11 @@ const CreateOrganization = () => {
           </Button>
         </div>
       </form>
+      <OutOfCapaticyModal
+        type={"organizations"}
+        visible={visible}
+        setVisible={setVisible}
+      />
     </>
   );
 };

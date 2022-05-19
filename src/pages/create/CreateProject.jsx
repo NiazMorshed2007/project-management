@@ -1,7 +1,6 @@
 import { Button, Form, Input, Select } from "antd";
 import {
   addDoc,
-  arrayRemove,
   arrayUnion,
   collection,
   doc,
@@ -10,10 +9,11 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { SetGlobalLoading } from "../../actions";
+import OutOfCapaticyModal from "../../components/OutOfCapaticyModal";
 import { db } from "../../firebase/firebase";
 import { generateId } from "../../functions/idGenerator";
 import { generateLogoText } from "../../functions/LogoText";
@@ -24,19 +24,13 @@ const { Option } = Select;
 const CreateProject = () => {
   const [form] = Form.useForm();
   const { id } = useParams();
+  const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleSubmit = async (values) => {
     let docId = "";
     let org = {};
     dispatch(SetGlobalLoading(true));
-    const project_data = {
-      project_name: values.name,
-      project_id: generateId(values.name),
-      project_logoText: generateLogoText(values.name),
-      project_avatar: null,
-      tabs: [],
-    };
     const q = query(
       collection(db, "organizations"),
       where("org_id", "==", generateId(values.selected_org)),
@@ -48,20 +42,38 @@ const CreateProject = () => {
       docId = doc.id;
       org = doc.data();
     });
-    await addDoc(collection(db, "projects"), {
-      ...project_data,
-      parent_org_id: org.org_id,
-      createdOn: getTime("m/d/y"),
-      owner_id: userProfile.uid,
-    });
-    await updateDoc(doc(db, "organizations", docId), {
-      projects: arrayUnion({
+
+    if (org.projects.length > 2) {
+      setVisible(true);
+      dispatch(SetGlobalLoading(false));
+    } else {
+      const project_data = {
+        project_name: values.name,
+        project_id: generateId(values.name),
+        project_logoText: generateLogoText(values.name),
+        project_avatar: null,
+        tabs: [],
+      };
+
+      await addDoc(collection(db, "projects"), {
         ...project_data,
-      }),
-    });
-    dispatch(SetGlobalLoading(false));
-    form.resetFields();
-    window.alert("Succesfull");
+        parent_org_id: org.org_id,
+        createdOn: getTime("m/d/y"),
+        owner_id: userProfile.uid,
+      });
+      await updateDoc(doc(db, "organizations", docId), {
+        projects: arrayUnion({
+          ...project_data,
+        }),
+      });
+      dispatch(SetGlobalLoading(false));
+      form.resetFields();
+      navigate(
+        `/w/p/overview?orgId=${generateId(values.selected_org)}&projectId=${
+          project_data.project_id
+        }`
+      );
+    }
   };
   const userProfile = useSelector((state) => {
     return state.userProfile;
@@ -73,7 +85,6 @@ const CreateProject = () => {
   function onSearch(val) {
     console.log("search:", val);
   }
-  useEffect(() => {}, [id]);
   return (
     <>
       <h1 className="text-4xl">Create Project</h1>
@@ -182,6 +193,11 @@ const CreateProject = () => {
           </Button>
         </div>
       </form> */}
+      <OutOfCapaticyModal
+        type="projects"
+        visible={visible}
+        setVisible={setVisible}
+      />
     </>
   );
 };

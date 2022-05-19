@@ -1,40 +1,40 @@
 import { Button, Dropdown, Form, Input, Menu, Modal } from "antd";
+import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import CustomTabs from "../../components/CustomTabs";
-import Header from "../../layout/Header";
-import { RiAddCircleFill } from "react-icons/ri";
-
+import { BiMessageRounded, BiUser } from "react-icons/bi";
 import {
   BsBuilding,
-  BsPencil,
-  BsTrash,
   BsCircle,
-  BsTags,
   BsFullscreen,
+  BsPencil,
+  BsTags,
+  BsTrash,
 } from "react-icons/bs";
-import { BiUser, BiMessageRounded } from "react-icons/bi";
-import { FiChevronDown, FiBook, FiEye, FiSettings } from "react-icons/fi";
-import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
+import { FiBook, FiChevronDown, FiEye, FiSettings } from "react-icons/fi";
+import { RiAddCircleFill } from "react-icons/ri";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { SetGlobalLoading } from "../../actions";
+import CustomTabs from "../../components/CustomTabs";
+import OutOfCapaticyModal from "../../components/OutOfCapaticyModal";
 import { db } from "../../firebase/firebase";
 import { generateId } from "../../functions/idGenerator";
-import { useDispatch } from "react-redux";
-import { SetGlobalLoading } from "../../actions";
+import Header from "../../layout/Header";
 
 const ProjectHeader = (props) => {
   const { project, serverId, org, tabId } = props;
   const [form] = Form.useForm();
-  const location = useLocation();
   const dispatch = useDispatch();
+  const [warning, setWarning] = useState(false);
   const [addModal, setAddModal] = useState(false);
   const navigate = useNavigate();
-  const location_params = location.search;
   const [tabs, setTabs] = useState([]);
   const showAddModal = () => {
-    setAddModal(true);
+    project.tabs.length > 2 ? setWarning(true) : setAddModal(true);
   };
   const closeAddModal = () => {
     setAddModal(false);
+    form.resetFields();
   };
   const handleAddSublist = async (values) => {
     dispatch(SetGlobalLoading(true));
@@ -42,11 +42,13 @@ const ProjectHeader = (props) => {
       tabs: arrayUnion({
         name: values.name,
         id: generateId(values.name),
-        link: `/w/p/${generateId(values.name)}${location_params}`,
+        link: `/w/p/${generateId(values.name)}`,
       }),
     })
       .then(() => {
         dispatch(SetGlobalLoading(false));
+        closeAddModal();
+        form.resetFields();
       })
       .catch((err) => {
         console.log(err);
@@ -59,12 +61,12 @@ const ProjectHeader = (props) => {
         {
           name: "Lists",
           id: "lists",
-          link: `/w/p/lists${location_params}`,
+          link: `/w/p/lists`,
         },
         {
           name: "Overview",
           id: "overview",
-          link: `/w/p/overview${location_params}`,
+          link: `/w/p/overview`,
         },
         ...project_sublists,
       ]);
@@ -230,9 +232,7 @@ const ProjectHeader = (props) => {
                 Create
               </Button>
               <Button
-                onClick={() => {
-                  navigate(-1);
-                }}
+                onClick={closeAddModal}
                 htmlType="cancel"
                 className="default-btn-unfilled"
               >
@@ -242,6 +242,11 @@ const ProjectHeader = (props) => {
           </Form.Item>
         </Form>
       </Modal>
+      <OutOfCapaticyModal
+        visible={warning}
+        setVisible={setWarning}
+        type={"tabs"}
+      />
     </Header>
   );
 };

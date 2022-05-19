@@ -1,9 +1,11 @@
 import React, { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const CustomTabs = (props) => {
   const { tabs, defaultActiveTabId, addingOption } = props;
   const [activeTab, setActiveTab] = useState(defaultActiveTabId);
+  const location = useLocation();
+  const location_params = location.search;
   const navigate = useNavigate();
   const tabRef = useRef([]);
   const setActiveKey = (key) => {
@@ -17,7 +19,7 @@ const CustomTabs = (props) => {
             ref={(el) => (tabRef.current[i] = el)}
             onClick={() => {
               setActiveKey(tab.id);
-              navigate(tab.link);
+              navigate(`${tab.link}${location_params}`);
             }}
             style={{ ...tab.style }}
             className={`tab ${tab.id} ${

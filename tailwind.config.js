@@ -8,6 +8,7 @@ module.exports = {
         secondary: "rgb(24 29 37 / 80%)",
         primary: "#181d25",
         btnColor: "#f5f5f5",
+        danger: "#eb425e",
       },
     },
   },

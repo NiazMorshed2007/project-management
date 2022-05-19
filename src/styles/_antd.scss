@@ -34,12 +34,16 @@
   .ant-modal-mask {
     @apply bg-white/25 backdrop-blur-sm;
   }
+
   .ant-modal-wrap {
-    .add-sublist-modal {
-      width: 690px !important;
-    }
-    .ant-modal-content {
-      @apply rounded-xl;
+    .ant-modal {
+      transform-origin: 50% 50% !important;
+      .add-sublist-modal {
+        width: 690px !important;
+      }
+      .ant-modal-content {
+        @apply rounded-xl;
+      }
     }
   }
 }

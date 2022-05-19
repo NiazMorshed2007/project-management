@@ -48,31 +48,23 @@ const Project = () => {
     }
   };
   useEffect(() => {
+    dispatch(SetGlobalLoading(true));
     const q = query(
       collection(db, "projects"),
       where("owner_id", "==", userProfile.uid),
       where("parent_org_id", "==", url_org_id),
       where("project_id", "==", url_project_id)
     );
-    const getData = () => {
-      dispatch(SetGlobalLoading(true));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const e_project = [];
-      onSnapshot(q, (querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          setProject(doc.data());
-          e_project.push(doc.data());
-        });
-        dispatch(SetGlobalLoading(false));
-        e_project.length < 1 ? navigate("/error") : setProject(...e_project);
+      querySnapshot.forEach((doc) => {
+        e_project.push(doc.data());
+        setProjectServerId(doc.id);
       });
-    };
-    getData();
-  }, [url_org_id, url_project_id]);
-  useEffect(() => {
-    if (!isGlobalLoading) {
-      // project.length < 1 && navigate("/error");
-    }
-  }, [project, isGlobalLoading]);
+      dispatch(SetGlobalLoading(false));
+      e_project.length < 1 ? navigate("/error") : setProject(...e_project);
+    });
+  }, []);
   useEffect(() => {
     const filteredrg = userProfile.organizations.find((org) => {
       return org.org_id === url_org_id;
