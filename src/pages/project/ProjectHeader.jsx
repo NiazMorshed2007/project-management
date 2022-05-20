@@ -52,11 +52,12 @@ const ProjectHeader = (props) => {
 
   const handleDeleteProject = () => {
     // org.projects.spilce(projectIndex, 1);
+    org.projects.splice(projectIndex, 1);
     console.log(org.projects);
-    // navigate(`/w/o/overview?orgId=${org.org_id}`);
-    // updateDoc(doc(db, "organizations", project.org_serverId), {
-    //   projects: org.projects,
-    // });
+    updateDoc(doc(db, "organizations", project.org_serverId), {
+      projects: org.projects,
+    });
+    navigate(`/w/o/overview?orgId=${org.org_id}`);
   };
 
   const handleAddSublist = (values) => {
