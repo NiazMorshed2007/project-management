@@ -1,16 +1,5 @@
 import { Button, Dropdown, Form, Input, Menu, Modal } from "antd";
-import {
-  addDoc,
-  arrayRemove,
-  arrayUnion,
-  collection,
-  deleteDoc,
-  doc,
-  onSnapshot,
-  query,
-  updateDoc,
-  where,
-} from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { BiMessageRounded, BiUser } from "react-icons/bi";
 import {
@@ -51,7 +40,6 @@ const ProjectHeader = (props) => {
   };
 
   const handleDeleteProject = () => {
-    // org.projects.spilce(projectIndex, 1);
     org.projects.splice(projectIndex, 1);
     console.log(org.projects);
     updateDoc(doc(db, "organizations", project.org_serverId), {
