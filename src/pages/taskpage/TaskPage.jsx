@@ -1,5 +1,5 @@
 import { doc, updateDoc } from "firebase/firestore";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Task from "../../components/Task";
 import { db } from "../../firebase/firebase";
 import { generateId } from "../../functions/idGenerator";
@@ -10,6 +10,7 @@ const TaskPage = (props) => {
   const elemRef = useRef();
   const [showInput, setShowInput] = useState(false);
   const handleAddtask = (e) => {
+    console.log(project);
     e.preventDefault();
     const newTask = {
       task_name: taskName,
@@ -39,36 +40,36 @@ const TaskPage = (props) => {
             </div>
           ))}
         </div>
-        {tasks.length < 1 && (
-          <div className="relative mt-1">
-            <p
-              onClick={() => {
-                setShowInput(true);
-                console.log("clicked");
-              }}
-              className="hover:text-secondary py-2 transition-all cursor-pointer border-b border-gray-200 pb-1 mb-0"
+        {/* {tasks.length < 1 && ( */}
+        <div className="relative">
+          <p
+            onClick={() => {
+              setShowInput(true);
+              console.log("clicked");
+            }}
+            className="hover:text-secondary py-2 transition-all cursor-pointer border-b border-gray-200 pb-1 mb-0"
+          >
+            Click here to add task
+          </p>
+          {showInput && (
+            <form
+              ref={elemRef}
+              className="absolute px-5 pr-20 bg-taskSelectedBack h-full w-full border-b top-0 left-0"
+              onSubmit={handleAddtask}
             >
-              Click here to add task
-            </p>
-            {showInput && (
-              <form
-                ref={elemRef}
-                className="absolute px-5 pr-20 bg-taskSelectedBack h-full w-full border-y top-0 left-0"
-                onSubmit={handleAddtask}
-              >
-                <input
-                  className="h-full px-2 placeholder:font-light outline-none w-full border border-brand rounded"
-                  type="text"
-                  placeholder="Enter a task name"
-                  value={taskName}
-                  onChange={(e) => {
-                    setTaskName(e.target.value);
-                  }}
-                />
-              </form>
-            )}
-          </div>
-        )}
+              <input
+                className="h-full px-2 placeholder:font-light outline-none w-full border border-brand rounded"
+                type="text"
+                placeholder="Enter a task name"
+                value={taskName}
+                onChange={(e) => {
+                  setTaskName(e.target.value);
+                }}
+              />
+            </form>
+          )}
+        </div>
+        {/* )} */}
       </div>
     </>
   );
