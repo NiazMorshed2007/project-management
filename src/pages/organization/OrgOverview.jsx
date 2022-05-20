@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 const OrgOverview = (props) => {
   const { org, current_orgId } = props;
   const navigate = useNavigate();
-  //   console.log(org);
   return (
     <>
       {org && (

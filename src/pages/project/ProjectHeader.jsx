@@ -1,5 +1,16 @@
 import { Button, Dropdown, Form, Input, Menu, Modal } from "antd";
-import { arrayUnion, doc, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  arrayRemove,
+  arrayUnion,
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { BiMessageRounded, BiUser } from "react-icons/bi";
 import {
@@ -13,7 +24,7 @@ import {
 import { FiBook, FiChevronDown, FiEye, FiSettings } from "react-icons/fi";
 import { RiAddCircleFill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { SetGlobalLoading } from "../../actions";
 import CustomTabs from "../../components/CustomTabs";
 import OutOfCapaticyModal from "../../components/OutOfCapaticyModal";
@@ -22,42 +33,51 @@ import { generateId } from "../../functions/idGenerator";
 import Header from "../../layout/Header";
 
 const ProjectHeader = (props) => {
-  const { project, serverId, org, tabId } = props;
+  const { project, org, projectIndex, tabId } = props;
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const [warning, setWarning] = useState(false);
   const [addModal, setAddModal] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const location_params = location.search;
   const [tabs, setTabs] = useState([]);
   const showAddModal = () => {
-    project.tabs.length > 2 ? setWarning(true) : setAddModal(true);
+    tabs.length > 4 ? setWarning(true) : setAddModal(true);
   };
   const closeAddModal = () => {
     setAddModal(false);
     form.resetFields();
   };
-  const handleAddSublist = async (values) => {
+
+  const handleDeleteProject = () => {
+    // org.projects.spilce(projectIndex, 1);
+    console.log(org.projects);
+    // navigate(`/w/o/overview?orgId=${org.org_id}`);
+    // updateDoc(doc(db, "organizations", project.org_serverId), {
+    //   projects: org.projects,
+    // });
+  };
+
+  const handleAddSublist = (values) => {
     dispatch(SetGlobalLoading(true));
-    await updateDoc(doc(db, "projects", serverId), {
-      tabs: arrayUnion({
-        name: values.name,
-        id: generateId(values.name),
-        link: `/w/p/${generateId(values.name)}`,
-        tasks: [],
-      }),
-    })
-      .then(() => {
-        dispatch(SetGlobalLoading(false));
-        closeAddModal();
-        form.resetFields();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const tab_data = {
+      name: values.name,
+      id: generateId(values.name),
+      link: `/w/p/${generateId(values.name)}`,
+      tasks: [],
+    };
+    org.projects[projectIndex].tabs.push({ ...tab_data });
+    updateDoc(doc(db, "organizations", project.org_serverId), {
+      projects: org.projects,
+    });
+    navigate(`${tab_data.link}${location_params}`);
+    dispatch(SetGlobalLoading(false));
+    closeAddModal();
+    form.resetFields();
   };
   useEffect(() => {
     if (project && project.tabs) {
-      const project_sublists = [...project.tabs];
       setTabs([
         {
           name: "Lists",
@@ -69,7 +89,7 @@ const ProjectHeader = (props) => {
           id: "overview",
           link: `/w/p/overview`,
         },
-        ...project_sublists,
+        ...project.tabs,
       ]);
     }
   }, [project]);
@@ -163,6 +183,9 @@ const ProjectHeader = (props) => {
                         label: "Delete",
                         key: "delete",
                         icon: <BsTrash />,
+                        onClick: () => {
+                          handleDeleteProject();
+                        },
                       },
                       {
                         label: "Options",

@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -18,32 +18,24 @@ const Organization = () => {
   const userProfile = useSelector((state) => {
     return state.userProfile;
   });
-  // console.log(userProfile.uid);
   const params = new URLSearchParams(location.search);
   const url_org_id = params.get("orgId");
-  // console.log(userProfile);
   useEffect(() => {
-    const e_org = [];
+    dispatch(SetGlobalLoading(true));
     const q = query(
       collection(db, "organizations"),
       where("owner_id", "==", userProfile.uid),
       where("org_id", "==", url_org_id)
     );
-    const getData = async () => {
-      dispatch(SetGlobalLoading(true));
-      const querySnapshot = await getDocs(q);
+    onSnapshot(q, (querySnapshot) => {
+      const e_org = [];
       querySnapshot.forEach((doc) => {
         e_org.push(doc.data());
-        console.log(doc.id, " => ", doc.data());
       });
       dispatch(SetGlobalLoading(false));
       e_org.length < 1 ? navigate("/error") : setOrg(...e_org);
-    };
-    getData();
+    });
   }, [url_org_id]);
-  useEffect(() => {
-    // console.log(org);
-  }, [org]);
   return (
     <Layout>
       <OrgHeader org={org} id={id} />

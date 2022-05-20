@@ -1,6 +1,5 @@
 import { Button, Form, Input, Select } from "antd";
 import {
-  addDoc,
   arrayUnion,
   collection,
   doc,
@@ -27,6 +26,9 @@ const CreateProject = () => {
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const userProfile = useSelector((state) => {
+    return state.userProfile;
+  });
   const handleSubmit = async (values) => {
     let docId = "";
     let org = {};
@@ -53,14 +55,10 @@ const CreateProject = () => {
         project_logoText: generateLogoText(values.name),
         project_avatar: null,
         tabs: [],
+        org_serverId: docId,
+        createdOn: getTime("m/d/y"),
       };
 
-      await addDoc(collection(db, "projects"), {
-        ...project_data,
-        parent_org_id: org.org_id,
-        createdOn: getTime("m/d/y"),
-        owner_id: userProfile.uid,
-      });
       await updateDoc(doc(db, "organizations", docId), {
         projects: arrayUnion({
           ...project_data,
@@ -75,16 +73,7 @@ const CreateProject = () => {
       );
     }
   };
-  const userProfile = useSelector((state) => {
-    return state.userProfile;
-  });
-  function onChange(value) {
-    console.log(`selected ${value}`);
-  }
 
-  function onSearch(val) {
-    console.log("search:", val);
-  }
   return (
     <>
       <h1 className="text-4xl">Create Project</h1>
@@ -112,8 +101,6 @@ const CreateProject = () => {
             showSearch
             placeholder="Select a organization"
             optionFilterProp="children"
-            onChange={onChange}
-            onSearch={onSearch}
             filterOption={(input, option) =>
               option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }
@@ -142,57 +129,6 @@ const CreateProject = () => {
           </div>
         </Form.Item>
       </Form>
-      {/* <form onSubmit={handleSubmit} className="mt-16 w-full">
-        <div className="label-inp w-full">
-          <input
-            className="w-full"
-            // value={name}
-            onChange={handleChange}
-            required
-            id="name"
-            name="name"
-            type="text"
-          />
-          <label htmlFor="email">Project Name</label>
-        </div>
-        <div className="label-inp w-full">
-          <span className="head">Organization</span>
-          <Select
-            showSearch
-            placeholder="Select a organization"
-            optionFilterProp="children"
-            onChange={onChange}
-            onSearch={onSearch}
-            defaultValue={org.org_name}
-            filterOption={(input, option) =>
-              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
-          >
-            {userProfile.organizations.map((org) => (
-              <Option key={org.org_id} value={org.org_name}>
-                {org.org_name}
-              </Option>
-            ))}
-          </Select>
-        </div>
-        <div className="label-inp">
-          <span>Template</span>
-        </div>
-        <div className="button-wrapper mt-4 w-full justify-end flex gap-5">
-          <Button htmlType="submit" className=" primary-btn-unfilled">
-            Create
-          </Button>
-          <Button
-            onClick={() => {
-              navigate(-1);
-            }}
-            htmlType="cancel"
-            className="default-btn-unfilled"
-          >
-            Cancel
-          </Button>
-        </div>
-      </form> */}
       <OutOfCapaticyModal
         type="projects"
         visible={visible}
