@@ -55,6 +55,7 @@ const CreateProject = () => {
         project_logoText: generateLogoText(values.name),
         project_avatar: null,
         tabs: [],
+        tasks: [],
         org_serverId: docId,
         createdOn: getTime("m/d/y"),
       };

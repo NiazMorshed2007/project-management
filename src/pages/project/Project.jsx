@@ -6,8 +6,8 @@ import { SetGlobalLoading } from "../../actions";
 import { db } from "../../firebase/firebase";
 import Layout from "../../layout/Layout";
 import Main from "../../layout/Main";
+import TaskPage from "../taskpage/TaskPage";
 import ProjectHeader from "./ProjectHeader";
-import ProjectLists from "./ProjectLists";
 import ProjectOverview from "./ProjectOverview";
 
 const Project = () => {
@@ -25,14 +25,6 @@ const Project = () => {
   });
   const url_org_id = params.get("orgId");
   const url_project_id = params.get("projectId");
-  const renderChain = (Routeid) => {
-    switch (Routeid) {
-      case "overview":
-        return <ProjectOverview org={org} project={project} />;
-      default:
-        return <ProjectLists tasks={tasks} />;
-    }
-  };
 
   useEffect(() => {
     dispatch(SetGlobalLoading(true));
@@ -63,29 +55,18 @@ const Project = () => {
       setProject(thisProject);
     }
   }, [org]);
-  // useEffect(() => {
-  //   if (project && project.tabs) {
-  //     const tabs = [];
-  //     tabs.push(...project.tabs);
-  //     switch (id) {
-  //       case "lists":
-  //         {
-  //           const all_tasks = [];
-  //           tabs.map((tab) => {
-  //             all_tasks.push(tab.tasks);
-  //           });
-  //           setTasks(...all_tasks);
-  //         }
-  //         break;
-  //       default:
-  //         {
-  //           setTasks([]);
-  //         }
-  //         break;
-  //     }
-  //   }
-  //   // console.log(project.tabs);
-  // }, [id, project]);
+  useEffect(() => {
+    if (project && project.tasks) {
+      if (id === "lists") {
+        setTasks(project.tasks);
+      } else {
+        const filtered_tasks = project.tasks.filter((task) => {
+          return task.tabId === id;
+        });
+        setTasks(filtered_tasks);
+      }
+    }
+  }, [id, project]);
   return (
     <Layout>
       <ProjectHeader
@@ -94,7 +75,13 @@ const Project = () => {
         tabId={id}
         project={project && project}
       />
-      <Main>{renderChain(id)}</Main>
+      <Main>
+        {id === "overview" ? (
+          <ProjectOverview org={org} project={project} />
+        ) : (
+          <TaskPage tabId={id} org={org} project={project} tasks={tasks} />
+        )}
+      </Main>
     </Layout>
   );
 };

@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
+import TaskPage from "../taskpage/TaskPage";
 
 const ProjectLists = (props) => {
-  const { tasks } = props;
-  console.log(tasks);
+  const { tasks, org, project } = props;
+  useEffect(() => {
+    console.log(tasks);
+  }, []);
   return (
     <div className="flex flex-col">
       {tasks.map((task) => (
         <p key={task}>{task}</p>
       ))}
+      <TaskPage />
     </div>
   );
 };

@@ -9,6 +9,7 @@ module.exports = {
         primary: "#181d25",
         btnColor: "#f5f5f5",
         danger: "#eb425e",
+        taskSelectedBack: "#ebf5f0"
       },
     },
   },

@@ -38,12 +38,15 @@
   .ant-modal-wrap {
     .ant-modal {
       transform-origin: 50% 50% !important;
-      .add-sublist-modal {
-        width: 690px !important;
-      }
       .ant-modal-content {
         @apply rounded-xl;
       }
+    }
+    .delete-modal {
+      width: 450px !important;
+    }
+    .add-sublist-modal {
+      width: 690px !important;
     }
   }
 }

@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { SetGlobalLoading } from "../../actions";
 import CustomTabs from "../../components/CustomTabs";
+import DeleteModal from "../../components/DeleteModal";
 import OutOfCapaticyModal from "../../components/OutOfCapaticyModal";
 import { db } from "../../firebase/firebase";
 import { generateId } from "../../functions/idGenerator";
@@ -27,6 +28,7 @@ const ProjectHeader = (props) => {
   const dispatch = useDispatch();
   const [warning, setWarning] = useState(false);
   const [addModal, setAddModal] = useState(false);
+  const [deleteVisible, setDeleteVisisble] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const location_params = location.search;
@@ -54,7 +56,6 @@ const ProjectHeader = (props) => {
       name: values.name,
       id: generateId(values.name),
       link: `/w/p/${generateId(values.name)}`,
-      tasks: [],
     };
     org.projects[projectIndex].tabs.push({ ...tab_data });
     updateDoc(doc(db, "organizations", project.org_serverId), {
@@ -173,7 +174,7 @@ const ProjectHeader = (props) => {
                         key: "delete",
                         icon: <BsTrash />,
                         onClick: () => {
-                          handleDeleteProject();
+                          setDeleteVisisble(true);
                         },
                       },
                       {
@@ -259,6 +260,13 @@ const ProjectHeader = (props) => {
         visible={warning}
         setVisible={setWarning}
         type={"tabs"}
+      />
+      <DeleteModal
+        visible={deleteVisible}
+        setVisible={setDeleteVisisble}
+        onOk={handleDeleteProject}
+        name={project.project_name}
+        type={"Project"}
       />
     </Header>
   );
