@@ -1,11 +1,15 @@
-import React, { useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setOpenedSidebar } from "../actions";
-import Logo from "./Logo";
-import { AiOutlinePushpin, AiOutlineSearch } from "react-icons/ai";
-import { NavLink, useNavigate } from "react-router-dom";
-import { AiOutlinePlus } from "react-icons/ai";
 import { Dropdown, Menu } from "antd";
+import React from "react";
+import {
+  AiOutlinePlus,
+  AiOutlinePushpin,
+  AiOutlineSearch,
+} from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setOpenedSidebar } from "../actions";
+import useClickOutside from "../hooks/useClickOutside";
+import Logo from "./Logo";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -15,16 +19,12 @@ const Sidebar = () => {
   const userProfile = useSelector((state) => {
     return state.userProfile;
   });
-  const sideBarRef = useRef();
+  let sideBarRef = useClickOutside(() => {
+    dispatch(setOpenedSidebar(false));
+  });
   const dispatch = useDispatch();
-  const hideSidebar = (e) => {
-    if (!sideBarRef.current.contains(e.target)) {
-      dispatch(setOpenedSidebar(false));
-    }
-  };
   return (
     <div
-      onClick={hideSidebar}
       className={`fixed w-screen h-screen ${
         isOpenedSidebar ? "pointer-events-auto" : "pointer-events-none"
       } z-20`}

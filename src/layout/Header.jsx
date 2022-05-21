@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BsCreditCard2Front } from "react-icons/bs";
 import { RiApps2Line } from "react-icons/ri";
 import { IoColorPaletteOutline } from "react-icons/io5";
+import { IoMdArrowDropright } from "react-icons/io";
 import { setOpenedSidebar } from "../actions";
 
 const Header = (props) => {
@@ -71,8 +72,14 @@ const Header = (props) => {
                     {
                       key: "apperance",
                       type: "sub-menu",
-                      label: "Apperance",
-                      title: "Appearance",
+                      label: (
+                        <div className="flex items-center justify-between">
+                          <p className="m-0">Appearance</p>
+                          <div className="ml-3">
+                            <IoMdArrowDropright />
+                          </div>
+                        </div>
+                      ),
                       icon: <IoColorPaletteOutline />,
                       children: [
                         {

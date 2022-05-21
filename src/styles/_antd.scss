@@ -8,13 +8,19 @@
   }
 }
 
-.ant-dropdown {
-  .ant-dropdown-menu,
-  .ant-dropdown-menu-sub {
+.ant-dropdown,
+.ant-dropdown-menu-submenu {
+  .anticon {
+    display: none;
+  }
+  .ant-dropdown-menu {
     border-radius: 6px;
     @apply border border-gray-300;
     .ant-dropdown-menu-item {
       @apply hover:bg-gray-100;
+    }
+    .ant-dropdown-menu-submenu-title {
+      padding-right: 10px;
     }
     .ant-dropdown-menu-item-divider {
       @apply bg-gray-300;
