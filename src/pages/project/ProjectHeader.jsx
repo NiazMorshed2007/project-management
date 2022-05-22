@@ -55,7 +55,7 @@ const ProjectHeader = (props) => {
     const tab_data = {
       name: values.name,
       id: generateId(values.name),
-      link: `/w/p/${generateId(values.name)}`,
+      link: `/w/p/${generateId(values.name)}/tree`,
     };
     org.projects[projectIndex].tabs.push({ ...tab_data });
     updateDoc(doc(db, "organizations", project.org_serverId), {
