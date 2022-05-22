@@ -1,14 +1,21 @@
 import React from "react";
 
-const Main = ({ children }) => {
+const Main = (props) => {
+  const { children } = props;
   return (
-    <main
-      style={{
-        padding: "0 15%",
-      }}
-      className="p-7 relative"
-    >
-      {children}
+    <main className="relative">
+      <div className="mt-2">
+        <div
+          style={{
+            paddingRight: "13%",
+            paddingLeft: "13%",
+            height: "calc(100vh - 150px)",
+          }}
+          className="inner mt-5 pb-10 overflow-y-scroll"
+        >
+          {children}
+        </div>
+      </div>
     </main>
   );
 };

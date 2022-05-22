@@ -1,5 +1,12 @@
 .task-pg {
   .task-header {
+    .filter-drop {
+      &:hover {
+        .filter-name {
+          @apply w-20 opacity-100;
+        }
+      }
+    }
     .views {
       i {
         width: 25px;
@@ -7,10 +14,14 @@
         @apply rounded-md flex items-center justify-center cursor-pointer transition-all hover:bg-gray-200;
         svg {
           font-size: 19px;
+          @apply text-slate-500;
         }
       }
       .active {
-        @apply bg-secondaryBrand/10 text-secondaryBrand hover:bg-secondaryBrand/10;
+        @apply bg-secondaryBrand/10  hover:bg-secondaryBrand/10;
+        svg {
+          @apply text-secondaryBrand;
+        }
       }
     }
   }

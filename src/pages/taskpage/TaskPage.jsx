@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import TreeView from "../../views/TreeView";
 import { IoStatsChartOutline } from "react-icons/io5";
-import { BsListNested } from "react-icons/bs";
-import { Tooltip } from "antd";
+import { IoMdArrowDropdown } from "react-icons/io";
+import { AiOutlineUser } from "react-icons/ai";
+import { BsListNested, BsListStars } from "react-icons/bs";
+import { FiFilter, FiPieChart, FiUsers } from "react-icons/fi";
+import { Dropdown, Menu, Tooltip } from "antd";
 import BoardView from "../../views/BoardView";
 
 const TaskPage = (props) => {
@@ -37,10 +40,53 @@ const TaskPage = (props) => {
   return (
     <div className="task-pg relative">
       <header className="task-header w-full flex items-center left-0 px-14 justify-between fixed">
-        <div>Filter</div>
+        <Dropdown
+          overlay={
+            <Menu
+              items={[
+                {
+                  label: "Active tasks",
+                  key: "active_tasks",
+                  icon: <FiPieChart />,
+                },
+                {
+                  label: "All Tasks",
+                  key: "all_tasks",
+                  icon: <BsListStars />,
+                },
+                {
+                  label: "My Tasks",
+                  key: "my_tasks",
+                  icon: <AiOutlineUser />,
+                },
+                {
+                  label: "Group by assignee",
+                  key: "group_by_assigne",
+                  icon: <FiUsers />,
+                },
+              ]}
+            />
+          }
+          trigger={["click"]}
+        >
+          <div
+            style={{ gap: ".57px" }}
+            className="flex cursor-pointer filter-drop items-center"
+          >
+            <FiFilter />
+            <div className="filter-name opacity-0 transition-all overflow-hidden w-1">
+              <div className="min-w-max">
+                <span>Active tasks</span>
+              </div>
+            </div>
+            <IoMdArrowDropdown />
+          </div>
+        </Dropdown>
+
         <div className="flex views items-center gap-5">
           {views.map((view) => (
             <Tooltip
+              placement="bottom"
               title={
                 <p className=" capitalize m-0">
                   {view.name}{" "}
@@ -63,7 +109,7 @@ const TaskPage = (props) => {
           ))}
         </div>
       </header>
-      <div className="mt-5 pt-1">
+      <div className="pt-14">
         <Routes>
           <Route
             path="tree"

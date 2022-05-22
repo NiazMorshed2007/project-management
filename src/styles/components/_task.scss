@@ -1,0 +1,20 @@
+.task {
+  &:hover {
+    .abs-actions,
+    .before-actions {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  .abs-actions,
+  .before-actions {
+    opacity: 0;
+    visibility: hidden;
+    i {
+      svg {
+        @apply text-gray-600;
+        font-size: 16px;
+      }
+    }
+  }
+}
