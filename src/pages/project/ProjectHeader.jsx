@@ -72,7 +72,7 @@ const ProjectHeader = (props) => {
         {
           name: "Lists",
           id: "lists",
-          link: `/w/p/lists`,
+          link: `/w/p/lists/tree`,
         },
         {
           name: "Overview",

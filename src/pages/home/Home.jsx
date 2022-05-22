@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import Layout from "../../layout/Layout";
 import Main from "../../layout/Main";

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import addTask from "../functions/addTask";
 import useClickOutside from "../hooks/useClickOutside";
 import Task from "../components/Task";
 
 const TreeView = (props) => {
-  const { tasks, project, org, tabId } = props;
+  const { tasks, project, org, tabId, setCurrentView } = props;
   const [taskName, setTaskName] = useState("");
   const [showInput, setShowInput] = useState(false);
   let elemRef = useClickOutside(() => {
@@ -15,6 +15,9 @@ const TreeView = (props) => {
     e.preventDefault();
     addTask(taskName, project, org, tabId, setTaskName);
   };
+  useEffect(() => {
+    setCurrentView("tree");
+  }, []);
   return (
     <div className="tasks-wrapper mt-10">
       <div className="border-t border-gray-200">

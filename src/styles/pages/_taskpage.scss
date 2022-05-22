@@ -1,0 +1,17 @@
+.task-pg {
+  .task-header {
+    .views {
+      i {
+        width: 25px;
+        height: 25px;
+        @apply rounded-md flex items-center justify-center cursor-pointer transition-all hover:bg-gray-200;
+        svg {
+          font-size: 19px;
+        }
+      }
+      .active {
+        @apply bg-secondaryBrand/10 text-secondaryBrand hover:bg-secondaryBrand/10;
+      }
+    }
+  }
+}
