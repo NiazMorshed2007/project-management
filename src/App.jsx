@@ -27,11 +27,9 @@ const App = () => {
     // eslint-disable-next-line
   }, []);
   useEffect(() => {
-    let uid = "";
     dispatch(SetGlobalLoading(true));
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        uid = user.uid;
         dispatch(setLogged(true));
         setUid(user.uid);
       } else {

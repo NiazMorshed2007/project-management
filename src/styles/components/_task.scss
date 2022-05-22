@@ -2,19 +2,31 @@
   &:hover {
     .abs-actions,
     .before-actions {
-      opacity: 1;
-      visibility: visible;
+      i {
+        opacity: 1;
+        visibility: visible;
+      }
     }
   }
-  .abs-actions,
-  .before-actions {
-    opacity: 0;
-    visibility: hidden;
+
+  .abs-actions {
     i {
       svg {
         @apply text-gray-600;
         font-size: 16px;
       }
+    }
+  }
+
+  .abs-actions,
+  .before-actions {
+    i {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .visib {
+      opacity: 1;
+      visibility: visible;
     }
   }
 }

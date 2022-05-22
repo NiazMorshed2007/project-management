@@ -19,11 +19,12 @@ import { FiCopy } from "react-icons/fi";
 import { GrActions } from "react-icons/gr";
 import { IoMdArrowDropright } from "react-icons/io";
 import { db } from "../firebase/firebase";
-import updateOrganizations from "../functions/updateOrganizations";
+import findIndexTasksById from "../functions/findIndexTasksById";
 
 const Task = (props) => {
   const { style, task_name, type, project, org, task_id, task_priority } =
     props;
+
   const priority_items = [
     {
       name: "Urgent",
@@ -37,8 +38,8 @@ const Task = (props) => {
     },
     {
       name: "None",
-      id: "None",
-      icon: <BsArrowUp />,
+      id: "none",
+      icon: <BsArrowUp className="text-gray-500" />,
     },
     {
       name: "Low",
@@ -46,6 +47,47 @@ const Task = (props) => {
       icon: <BsArrowDown className="text-blue-500" />,
     },
   ];
+  const handlePriority = (id, priority) => {
+    const index = findIndexTasksById(project.tasks, id);
+    project.tasks[index].task_priority = priority;
+    console.log(project.tasks[index]);
+    updateDoc(doc(db, "organizations", project.org_serverId), {
+      projects: org.projects,
+    });
+  };
+
+  const handleTaskTabId = () => {};
+
+  const priorityData = () => {
+    var items = [];
+    priority_items.map((item) => {
+      items.push({
+        label: item.name,
+        key: item.id,
+        icon: item.icon,
+        style: {
+          color: task_priority === item.id && "#05843e",
+        },
+        onClick: () => {
+          handlePriority(task_id, item.id);
+        },
+      });
+    });
+    return items;
+  };
+
+  const available_sublists = () => {
+    const sublists = [];
+    project.tabs.map((tab) => {
+      sublists.push({
+        label: tab.name,
+        key: tab.id,
+        icon: <BsListNested />,
+      });
+    });
+    return sublists;
+  };
+
   const handleDeleteTask = (id) => {
     const index = project.tasks.findIndex((task) => {
       return task.task_id === id;
@@ -55,16 +97,7 @@ const Task = (props) => {
       projects: org.projects,
     });
   };
-  const handlePriority = (id, priority) => {
-    const index = project.tasks.findIndex((task) => {
-      return task.task_id === id;
-    });
-    project.tasks[index].task_priority = priority;
-    console.log(project.tasks[index]);
-    updateDoc(doc(db, "organizations", project.org_serverId), {
-      projects: org.projects,
-    });
-  };
+
   return (
     <>
       {type === "tree" && (
@@ -89,14 +122,32 @@ const Task = (props) => {
                   icon: <BsTag />,
                 },
                 {
-                  label: "Set priority",
+                  label: (
+                    <div className="flex items-center justify-between">
+                      <p className="m-0">Set priority</p>
+                      <div className="ml-3">
+                        <IoMdArrowDropright />
+                      </div>
+                    </div>
+                  ),
                   key: "priority",
                   icon: <BsArrowUp />,
+                  type: "sub-menu",
+                  children: [...priorityData()],
                 },
                 {
-                  label: "Set sublist",
+                  label: (
+                    <div className="flex items-center justify-between">
+                      <p className="m-0">Set sublist</p>
+                      <div className="ml-3">
+                        <IoMdArrowDropright />
+                      </div>
+                    </div>
+                  ),
                   icon: <BsListUl />,
                   key: "sublist",
+                  type: "sub-menu",
+                  children: [...available_sublists()],
                 },
                 {
                   type: "divider",
@@ -213,64 +264,25 @@ const Task = (props) => {
           >
             {task_name}
             <div className="absolute px-2 before-actions flex items-center gap-2 top-0 h-full left-0 -translate-x-full">
-              <Tooltip title="Complete" placement="bottom">
+              <Tooltip mouseEnterDelay={1} title="Complete" placement="bottom">
                 <i>
                   <BsCircle />
                 </i>
               </Tooltip>
               <Dropdown
-                overlay={
-                  <Menu
-                    items={[
-                      {
-                        label: "Urgent",
-                        icon: <BsArrowUp className="text-red-500" />,
-                        key: "urgent",
-                        onClick: () => {
-                          handlePriority(task_id, "urgent");
-                        },
-                      },
-                      {
-                        label: "High",
-                        icon: <BsArrowUp className="text-yellow-500" />,
-                        key: "high",
-                        onClick: () => {
-                          handlePriority(task_id, "high");
-                        },
-                      },
-                      {
-                        label: "None",
-                        icon: <BsArrowUp />,
-                        key: "none",
-                        onClick: () => {
-                          handlePriority(task_id, "none");
-                        },
-                      },
-                      {
-                        label: "Low",
-                        icon: <BsArrowDown className="text-blue-500" />,
-                        key: "low",
-                        onClick: () => {
-                          handlePriority(task_id, "low");
-                        },
-                      },
-                    ]}
-                  />
-                }
+                overlay={<Menu items={[...priorityData()]} />}
                 trigger={["click"]}
               >
-                <Tooltip title="Priority" placement="bottom">
-                  <i>
-                    {task_priority === "urgent" && (
-                      <BsArrowUp className="text-red-500" />
-                    )}
-                    {task_priority === "high" && (
-                      <BsArrowUp className="text-yellow-500" />
-                    )}
-                    {task_priority === "none" && <BsArrowUp />}
-                    {task_priority === "low" && (
-                      <BsArrowDown className="text-blue-500" />
-                    )}
+                <Tooltip
+                  mouseEnterDelay={1}
+                  title="Priority"
+                  placement="bottom"
+                >
+                  <i className={`${task_priority !== "none" && "visib"}`}>
+                    {task_priority === "urgent" && priority_items[0].icon}
+                    {task_priority === "high" && priority_items[1].icon}
+                    {task_priority === "none" && priority_items[2].icon}
+                    {task_priority === "low" && priority_items[3].icon}
                   </i>
                 </Tooltip>
               </Dropdown>

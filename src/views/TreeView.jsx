@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
+import Task from "../components/Task";
 import addTask from "../functions/addTask";
 import useClickOutside from "../hooks/useClickOutside";
-import Task from "../components/Task";
-import updateOrganizations from "../functions/updateOrganizations";
 
 const TreeView = (props) => {
   const { tasks, project, org, tabId, setCurrentView } = props;
@@ -23,7 +22,7 @@ const TreeView = (props) => {
     <div className="tasks-wrapper">
       <div className="border-t border-gray-200">
         {tasks.map((task, index) => (
-          <div key={task.id} className="task-wrap">
+          <div key={task.task_id} className="task-wrap">
             <Task
               project={project}
               org={org}
