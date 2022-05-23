@@ -22,8 +22,16 @@ import { db } from "../firebase/firebase";
 import findIndexTasksById from "../functions/findIndexTasksById";
 
 const Task = (props) => {
-  const { style, task_name, type, project, org, task_id, task_priority } =
-    props;
+  const {
+    style,
+    task_name,
+    type,
+    project,
+    org,
+    task_id,
+    task_priority,
+    task_tabId,
+  } = props;
 
   const priority_items = [
     {
@@ -50,13 +58,18 @@ const Task = (props) => {
   const handlePriority = (id, priority) => {
     const index = findIndexTasksById(project.tasks, id);
     project.tasks[index].task_priority = priority;
-    console.log(project.tasks[index]);
     updateDoc(doc(db, "organizations", project.org_serverId), {
       projects: org.projects,
     });
   };
 
-  const handleTaskTabId = () => {};
+  const handleTaskSublist = (id, sublistId) => {
+    const index = findIndexTasksById(project.tasks, id);
+    project.tasks[index].task_tabId = sublistId;
+    updateDoc(doc(db, "organizations", project.org_serverId), {
+      projects: org.projects,
+    });
+  };
 
   const priorityData = () => {
     var items = [];
@@ -80,9 +93,15 @@ const Task = (props) => {
     const sublists = [];
     project.tabs.map((tab) => {
       sublists.push({
-        label: tab.name,
+        label: "Set to " + tab.name,
         key: tab.id,
+        style: {
+          color: task_tabId === tab.id && "#05843e",
+        },
         icon: <BsListNested />,
+        onClick: () => {
+          handleTaskSublist(task_id, tab.id);
+        },
       });
     });
     return sublists;

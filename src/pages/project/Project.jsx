@@ -61,7 +61,7 @@ const Project = () => {
         setTasks(project.tasks);
       } else {
         const filtered_tasks = project.tasks.filter((task) => {
-          return task.tabId === id;
+          return task.task_tabId === id;
         });
         setTasks(filtered_tasks);
       }

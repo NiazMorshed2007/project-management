@@ -7,7 +7,7 @@ const addTask = (name, project, org, tabId, dispatch) => {
     const newTask = {
       task_name: name,
       task_id: generateId(name) + (Math.random() * 1000).toString(),
-      tabId: tabId,
+      task_tabId: tabId,
       task_priority: "none",
     };
     project.tasks.push({
