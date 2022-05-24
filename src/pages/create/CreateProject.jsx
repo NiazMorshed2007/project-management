@@ -55,6 +55,23 @@ const CreateProject = () => {
         project_logoText: generateLogoText(values.name),
         project_avatar: null,
         tabs: [],
+        statuses: [
+          {
+            name: "To-Do",
+            id: "todo",
+            isDeletable: false,
+          },
+          {
+            name: "In Progress",
+            id: "in_progress",
+            isDeletable: "true",
+          },
+          {
+            name: "Completed",
+            id: "completed",
+            isDeletable: false,
+          },
+        ],
         tasks: [],
         org_serverId: docId,
         createdOn: getTime("m/d/y"),

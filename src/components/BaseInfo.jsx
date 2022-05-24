@@ -6,8 +6,8 @@ const BaseInfo = (props) => {
     <div className="base-info border-b bordr-gray-200 pb-8 w-full flex items-center gap-8">
       <div className="avatar-wrapper">
         <div
-          className={`avatar flex items-center justify-center w-44 h-44 ${
-            rounded ? "rounded-full" : "rounded-3xl"
+          className={`avatar flex items-center justify-center w-40 h-40 ${
+            rounded ? "rounded-full" : "rounded-lg"
           } bg-secondaryBrand`}
         >
           {avatar}

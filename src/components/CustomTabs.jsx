@@ -23,7 +23,9 @@ const CustomTabs = (props) => {
             }}
             style={{ ...tab.style }}
             className={`tab ${tab.id} ${
-              activeTab === tab.id && "active-tab border-b-brand font-semibold"
+              activeTab === tab.id
+                ? "active-tab border-b-brand font-semibold"
+                : "hover:border-b-brand/40"
             } cursor-pointer border-transparent border-b-2`}
             key={tab.id}
           >

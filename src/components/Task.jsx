@@ -279,7 +279,7 @@ const Task = (props) => {
             style={{
               ...style,
             }}
-            className="task border-b py-1 px-2 pl-7 transition-all relative hover:bg-gray-100 cursor-pointer border-gray-300"
+            className="task border-b pl-7 transition-all relative hover:bg-gray-100 cursor-pointer border-gray-300"
           >
             {task_name}
             <div className="absolute px-2 before-actions flex items-center gap-2 top-0 h-full left-0 -translate-x-full">
