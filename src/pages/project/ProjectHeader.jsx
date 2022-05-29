@@ -258,6 +258,10 @@ const ProjectHeader = (props) => {
             <span>Not</span>
             <Input placeholder="name" />
           </Form.Item>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci
+          dolorum necessitatibus ad id dolorem incidunt deleniti minima rem modi
+          possimus voluptatem perferendis facere error, doloremque impedit!
+          Dolore eius tempore dolor!
           <div className="flex mt-7 items-center justify-end gap-3">
             <Button htmlType="submit" className=" primary-btn-pdsm">
               Create
