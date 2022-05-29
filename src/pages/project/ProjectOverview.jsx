@@ -1,4 +1,6 @@
-import React from "react";
+import "chart.js/auto";
+import React, { useState } from "react";
+import { PolarArea } from "react-chartjs-2";
 import { FiEdit2 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import BaseInfo from "../../components/BaseInfo";
@@ -6,6 +8,50 @@ import BaseInfo from "../../components/BaseInfo";
 const ProjectOverview = (props) => {
   const { project, org } = props;
   const navigate = useNavigate();
+  const todoTasks =
+    project &&
+    project.tasks.filter((task) => {
+      return task.task_status === "todo";
+    });
+
+  const data = {
+    labels: ["Todo", "Green", "Yellow", "Grey", "Blue"],
+    datasets: [
+      {
+        label: "My First Dataset",
+        data: [todoTasks.length],
+        backgroundColor: [
+          "#ededed",
+          "rgb(75, 192, 192)",
+          "rgb(255, 205, 86)",
+          "rgb(201, 203, 207)",
+          "rgb(54, 162, 235)",
+        ],
+      },
+    ],
+  };
+  const options = {
+    elements: {
+      line: {
+        borderWidth: 3,
+      },
+    },
+    // scales: {
+    //   y: {
+    //     grid: {
+    //       borderWidth: 0,
+    //     },
+    //     ticks: {
+    //       stepSize: 5,
+    //     },
+    //   },
+    //   x: {
+    //     grid: {
+    //       display: false,
+    //     },
+    //   },
+    // },
+  };
   return (
     <>
       {project && (
@@ -52,6 +98,19 @@ const ProjectOverview = (props) => {
               </>
             }
           />
+          <div className="stats mt-9">
+            <h1 className="text-xl">Progress Stats</h1>
+            <div className="flex mt-9">
+              <div className="w-1/2">
+                <PolarArea
+                  data={data}
+                  options={options}
+                  height={200}
+                  width={300}
+                />
+              </div>
+            </div>
+          </div>
         </>
       )}
     </>
