@@ -36,6 +36,7 @@ const TaskPage = (props) => {
       }
     };
     document.addEventListener("keyup", viewNavigatorShortcut, false);
+    //eslint-disable-next-line
   }, []);
   return (
     <div className="task-pg relative">

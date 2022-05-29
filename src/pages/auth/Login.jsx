@@ -29,7 +29,7 @@ const Login = () => {
         dispatch(setLogged(true));
       })
       .catch((err) => {
-        const errCode = err.code;
+        // const errCode = err.code;
         const errMsg = err.message;
         setError(errMsg);
       });
@@ -38,6 +38,7 @@ const Login = () => {
     if (!isGlobalLoading) {
       navigate("/login");
     }
+    // eslint-disable-next-line
   }, []);
   return (
     <>

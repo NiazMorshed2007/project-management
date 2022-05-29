@@ -29,10 +29,11 @@ const Task = (props) => {
     project,
     org,
     task_id,
+    task_status,
     task_priority,
     task_tabId,
   } = props;
-
+  // fixed priority items
   const priority_items = [
     {
       name: "Urgent",
@@ -55,24 +56,33 @@ const Task = (props) => {
       icon: <BsArrowDown className="text-blue-500" />,
     },
   ];
-  const handlePriority = (id, priority) => {
-    const index = findIndexTasksById(project.tasks, id);
-    project.tasks[index].task_priority = priority;
+
+  // actions that can users trigger in this component
+
+  const handleChange = (target, val) => {
+    const index = findIndexTasksById(project.tasks, task_id);
+    project.tasks[index] = {
+      ...project.tasks[index],
+      [target]: val,
+    };
     updateDoc(doc(db, "organizations", project.org_serverId), {
       projects: org.projects,
     });
   };
 
-  const handleTaskSublist = (id, sublistId) => {
-    const index = findIndexTasksById(project.tasks, id);
-    project.tasks[index].task_tabId = sublistId;
+  const handleDeleteTask = () => {
+    const index = findIndexTasksById(project.tasks, task_id);
+    project.tasks.splice(index, 1);
     updateDoc(doc(db, "organizations", project.org_serverId), {
       projects: org.projects,
     });
   };
+
+  // sub-menu data functions down here. Mapping thorough arrays to create a json object for antd menu items
 
   const priorityData = () => {
     var items = [];
+    // eslint-disable-next-line
     priority_items.map((item) => {
       items.push({
         label: item.name,
@@ -82,7 +92,25 @@ const Task = (props) => {
           color: task_priority === item.id && "#05843e",
         },
         onClick: () => {
-          handlePriority(task_id, item.id);
+          handleChange("task_priority", item.id);
+        },
+      });
+    });
+    return items;
+  };
+
+  const statuses_data = () => {
+    const items = [];
+    // eslint-disable-next-line
+    project.statuses.map((status) => {
+      items.push({
+        label: status.name,
+        key: status.id,
+        style: {
+          color: status.id === task_status && "#05843e",
+        },
+        onClick: () => {
+          handleChange("task_status", status.id);
         },
       });
     });
@@ -91,6 +119,7 @@ const Task = (props) => {
 
   const available_sublists = () => {
     const sublists = [];
+    // eslint-disable-next-line
     project.tabs.map((tab) => {
       sublists.push({
         label: "Set to " + tab.name,
@@ -100,21 +129,11 @@ const Task = (props) => {
         },
         icon: <BsListNested />,
         onClick: () => {
-          handleTaskSublist(task_id, tab.id);
+          handleChange("task_tabId", tab.id);
         },
       });
     });
     return sublists;
-  };
-
-  const handleDeleteTask = (id) => {
-    const index = project.tasks.findIndex((task) => {
-      return task.task_id === id;
-    });
-    project.tasks.splice(index, 1);
-    updateDoc(doc(db, "organizations", project.org_serverId), {
-      projects: org.projects,
-    });
   };
 
   return (
@@ -131,9 +150,18 @@ const Task = (props) => {
                   icon: <AiOutlineUser />,
                 },
                 {
-                  label: "Set status",
+                  label: (
+                    <div className="flex items-center justify-between">
+                      <p className="m-0">Set status</p>
+                      <div className="ml-3">
+                        <IoMdArrowDropright />
+                      </div>
+                    </div>
+                  ),
                   icon: <BsCircle />,
                   key: "status",
+                  type: "sub-menu",
+                  children: [...statuses_data()],
                 },
                 {
                   label: "Set tag",
@@ -261,7 +289,7 @@ const Task = (props) => {
                     </div>
                   ),
                   onClick: () => {
-                    handleDeleteTask(task_id);
+                    handleDeleteTask();
                   },
                   icon: <BsTrash />,
                   key: "delete",

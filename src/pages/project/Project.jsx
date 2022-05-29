@@ -41,6 +41,7 @@ const Project = () => {
       dispatch(SetGlobalLoading(false));
       e_org.length < 1 ? navigate("/error") : setOrg(...e_org);
     });
+    // eslint-disable-next-line
   }, [url_org_id]);
   useEffect(() => {
     if (org && org.projects) {
@@ -54,6 +55,7 @@ const Project = () => {
       setProjectIndex(index);
       setProject(thisProject);
     }
+    // eslint-disable-next-line
   }, [org]);
   useEffect(() => {
     if (project && project.tasks) {
@@ -62,10 +64,11 @@ const Project = () => {
       } else {
         const filtered_tasks = project.tasks.filter((task) => {
           return task.task_tabId === id;
-        }); 
+        });
         setTasks(filtered_tasks);
       }
     }
+    // eslint-disable-next-line
   }, [id, project]);
   return (
     <Layout>
