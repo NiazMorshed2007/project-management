@@ -19,6 +19,7 @@ import CustomTabs from "../../components/CustomTabs";
 import DeleteModal from "../../components/DeleteModal";
 import OutOfCapaticyModal from "../../components/OutOfCapaticyModal";
 import { db } from "../../firebase/firebase";
+import { iconsArr } from "../../functions/icons.arr";
 import { generateId } from "../../functions/idGenerator";
 import Header from "../../layout/Header";
 
@@ -230,30 +231,45 @@ const ProjectHeader = (props) => {
         onCancel={closeAddModal}
       >
         <h2 className=" text-2xl">Create Sublist</h2>
-        <Form form={form} onFinish={handleAddSublist}>
+        <i>{iconsArr[0]}</i>
+        <Form
+          form={form}
+          requiredMark={false}
+          layout={"inline"}
+          onFinish={handleAddSublist}
+        >
           <Form.Item
-            label={"Name"}
+            label={""}
             name={"name"}
             rules={[
               { required: true, message: "Please input your Sublist Name!" },
             ]}
           >
+            <span>Name</span>
             <Input placeholder="name" />
           </Form.Item>
-          <Form.Item>
-            <div className="flex items-center justify-end gap-3">
-              <Button htmlType="submit" className=" primary-btn-pdsm">
-                Create
-              </Button>
-              <Button
-                onClick={closeAddModal}
-                htmlType="cancel"
-                className="default-btn-unfilled"
-              >
-                Cancel
-              </Button>
-            </div>
+          <Form.Item
+            label={""}
+            name={"name"}
+            rules={[
+              { required: true, message: "Please input your Sublist Name!" },
+            ]}
+          >
+            <span>Not</span>
+            <Input placeholder="name" />
           </Form.Item>
+          <div className="flex mt-7 items-center justify-end gap-3">
+            <Button htmlType="submit" className=" primary-btn-pdsm">
+              Create
+            </Button>
+            <Button
+              onClick={closeAddModal}
+              htmlType="cancel"
+              className="default-btn-unfilled"
+            >
+              Cancel
+            </Button>
+          </div>
         </Form>
       </Modal>
       <OutOfCapaticyModal

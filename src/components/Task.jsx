@@ -59,7 +59,7 @@ const Task = (props) => {
 
   // actions that can users trigger in this component
 
-  const handleChange = (target, val) => {
+  const handleUpdateTask = (target, val) => {
     const index = findIndexTasksById(project.tasks, task_id);
     project.tasks[index] = {
       ...project.tasks[index],
@@ -92,7 +92,7 @@ const Task = (props) => {
           color: task_priority === item.id && "#05843e",
         },
         onClick: () => {
-          handleChange("task_priority", item.id);
+          handleUpdateTask("task_priority", item.id);
         },
       });
     });
@@ -110,7 +110,7 @@ const Task = (props) => {
           color: status.id === task_status && "#05843e",
         },
         onClick: () => {
-          handleChange("task_status", status.id);
+          handleUpdateTask("task_status", status.id);
         },
       });
     });
@@ -129,7 +129,7 @@ const Task = (props) => {
         },
         icon: <BsListNested />,
         onClick: () => {
-          handleChange("task_tabId", tab.id);
+          handleUpdateTask("task_tabId", tab.id);
         },
       });
     });
