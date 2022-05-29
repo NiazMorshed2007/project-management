@@ -18,6 +18,7 @@ import { getTime } from "../../functions/Time";
 const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [error, setError] = useState("");
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -62,6 +63,7 @@ const SignUp = () => {
                 },
               ],
               joinedAt: getTime("m/d/y"),
+              my_tasks: [],
             });
             await addDoc(collection(db, "organizations"), {
               ...org_data,
@@ -79,6 +81,8 @@ const SignUp = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        setError(errorMessage);
+        dispatch(SetGlobalLoading(false));
         // ..
       });
   };
@@ -87,6 +91,11 @@ const SignUp = () => {
       <h1>Sign up for Quire</h1>
       <p>Dream. Plan. Achieve.</p>
       <div className="form-wrapper mt-7 w-72">
+        {error !== "" && (
+          <div className="err-wrapper p-4 rounded-lg bg-red-200  mb-10">
+            {error}
+          </div>
+        )}
         <form onSubmit={handleSignUp}>
           <div className="label-inp">
             <input

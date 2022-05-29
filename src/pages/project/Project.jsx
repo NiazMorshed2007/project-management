@@ -62,7 +62,7 @@ const Project = () => {
       } else {
         const filtered_tasks = project.tasks.filter((task) => {
           return task.task_tabId === id;
-        });
+        }); 
         setTasks(filtered_tasks);
       }
     }

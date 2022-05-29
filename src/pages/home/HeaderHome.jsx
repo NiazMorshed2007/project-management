@@ -17,7 +17,7 @@ const HeaderHome = (props) => {
       {
         name: "My Tasks",
         id: "my_tasks",
-        link: "/u/my_tasks",
+        link: "/u/my_tasks/tree",
       },
       {
         name: "Overview",

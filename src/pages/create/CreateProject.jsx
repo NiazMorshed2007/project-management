@@ -55,6 +55,7 @@ const CreateProject = () => {
         project_logoText: generateLogoText(values.name),
         project_avatar: null,
         tabs: [],
+        tags: [],
         statuses: [
           {
             name: "To-Do",
