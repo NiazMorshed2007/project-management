@@ -28,6 +28,9 @@ npm run test
 👤 **Niaz Morshed**
 
 
+## Note:
+This project is not stable yet. So, your data could be deleted.
+
 ## Show your support
 
 Give a ⭐️ if this project helped you!
