@@ -232,12 +232,7 @@ const ProjectHeader = (props) => {
       >
         <h2 className=" text-2xl">Create Sublist</h2>
         <i>{iconsArr[0]}</i>
-        <Form
-          form={form}
-          requiredMark={false}
-          layout={"inline"}
-          onFinish={handleAddSublist}
-        >
+        <Form form={form} requiredMark={false} onFinish={handleAddSublist}>
           <Form.Item
             label={""}
             name={"name"}
@@ -250,18 +245,12 @@ const ProjectHeader = (props) => {
           </Form.Item>
           <Form.Item
             label={""}
-            name={"name"}
-            rules={[
-              { required: true, message: "Please input your Sublist Name!" },
-            ]}
+            name={"share_with"}
+            rules={[{ required: true, message: "Select a type" }]}
           >
-            <span>Not</span>
-            <Input placeholder="name" />
+            <span>Share with</span>
+            <Input placeholder="Share with" />
           </Form.Item>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci
-          dolorum necessitatibus ad id dolorem incidunt deleniti minima rem modi
-          possimus voluptatem perferendis facere error, doloremque impedit!
-          Dolore eius tempore dolor!
           <div className="flex mt-7 items-center justify-end gap-3">
             <Button htmlType="submit" className=" primary-btn-pdsm">
               Create
