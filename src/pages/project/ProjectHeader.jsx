@@ -232,38 +232,53 @@ const ProjectHeader = (props) => {
       >
         <h2 className=" text-2xl">Create Sublist</h2>
         <i>{iconsArr[0]}</i>
-        <Form form={form} requiredMark={false} onFinish={handleAddSublist}>
-          <Form.Item
-            label={""}
-            name={"name"}
-            rules={[
-              { required: true, message: "Please input your Sublist Name!" },
-            ]}
-          >
+        <Form
+          form={form}
+          layout={"inline"}
+          requiredMark={false}
+          onFinish={handleAddSublist}
+        >
+          <div>
             <span>Name</span>
-            <Input placeholder="name" />
-          </Form.Item>
+            <Form.Item
+              label={""}
+              name={"name"}
+              rules={[
+                { required: true, message: "Please input your Sublist Name!" },
+              ]}
+            >
+              <Input placeholder="name" />
+            </Form.Item>
+          </div>
+          {/* <div> */}
+          {/* <span>Share with</span> */}
           <Form.Item
-            label={""}
+            label={"Share with"}
             name={"share_with"}
             rules={[{ required: true, message: "Select a type" }]}
           >
-            <span>Share with</span>
             <Input placeholder="Share with" />
           </Form.Item>
-          <div className="flex mt-7 items-center justify-end gap-3">
-            <Button htmlType="submit" className=" primary-btn-pdsm">
-              Create
-            </Button>
-            <Button
-              onClick={closeAddModal}
-              htmlType="cancel"
-              className="default-btn-unfilled"
-            >
-              Cancel
-            </Button>
-          </div>
+          {/* </div> */}
         </Form>
+        <div className="flex mt-5 items-center justify-end gap-3">
+          <Button
+            onClick={() => {
+              form.submit();
+            }}
+            htmlType="submit"
+            className=" primary-btn-pdsm"
+          >
+            Create
+          </Button>
+          <Button
+            onClick={closeAddModal}
+            htmlType="cancel"
+            className="default-btn-unfilled"
+          >
+            Cancel
+          </Button>
+        </div>
       </Modal>
       <OutOfCapaticyModal
         visible={warning}
