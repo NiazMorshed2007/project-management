@@ -1,10 +1,11 @@
 import { Dropdown, Menu } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import {
   AiOutlinePlus,
   AiOutlinePushpin,
   AiOutlineSearch,
 } from "react-icons/ai";
+import { IoMdArrowDropdown } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setOpenedSidebar } from "../actions";
@@ -13,12 +14,28 @@ import Logo from "./Logo";
 
 const Sidebar = () => {
   const navigate = useNavigate();
+  const [org, setorg] = useState({});
   const isOpenedSidebar = useSelector((state) => {
     return state.isOpenedSidebar;
   });
   const userProfile = useSelector((state) => {
     return state.userProfile;
   });
+  const organizations = () => {
+    const orgs = [];
+    userProfile.organizations &&
+      userProfile.organizations.forEach((org) => {
+        orgs.push({
+          label: org.org_name,
+          key: org.org_id,
+          className: "w-c-m-p",
+          onClick: () => {
+            navigate(`/w/o/overview?orgId=${org.org_id}`);
+          },
+        });
+      });
+    return orgs;
+  };
   let sideBarRef = useClickOutside(() => {
     dispatch(setOpenedSidebar(false));
   });
@@ -60,44 +77,62 @@ const Sidebar = () => {
             </div>
             <p className="m-0">My Tasks</p>
           </div>
+          <Menu
+            mode="inline"
+            items={[
+              {
+                label: (
+                  <div className="flex items-center justify-between">
+                    <p className="m-0">WORKSPACE</p>
+                    <div className="ml-3 flex items-center gap-3">
+                      <Dropdown
+                        trigger={["click"]}
+                        overlay={
+                          <Menu
+                            items={[
+                              {
+                                label: "Add Project",
+                                key: "add_project",
+                                onClick: () => {
+                                  navigate(
+                                    `/c/project/${userProfile.organizations[0].org_id}`
+                                  );
+                                },
+                              },
+                              {
+                                label: "Add Organization",
+                                key: "add_org",
+                                onClick: () => {
+                                  navigate("/c/organization");
+                                },
+                              },
+                            ]}
+                          />
+                        }
+                      >
+                        <i>
+                          <AiOutlinePlus />
+                        </i>
+                      </Dropdown>
+                      <IoMdArrowDropdown />
+                    </div>
+                  </div>
+                ),
+                className: "w-m-p",
+                type: "sub-menu",
+                children: [...organizations()],
+              },
+            ]}
+          />
           <div
-            // onClick={() => {
-            //   navigate("/u/my_tasks");
-            // }}
-            className="sec justify-between"
+            onClick={() => {
+              navigate("/u/my_tasks");
+            }}
+            className="border-t pt-2 border-b-none"
           >
-            <p className="m-0">WORKSPACE</p>
-            <Dropdown
-              trigger={["click"]}
-              overlay={
-                <Menu
-                  items={[
-                    {
-                      label: "Add Project",
-                      key: "add_project",
-                      onClick: () => {
-                        navigate(
-                          `/c/project/${userProfile.organizations[0].org_id}`
-                        );
-                      },
-                    },
-                    {
-                      label: "Add Organization",
-                      key: "add_org",
-                      onClick: () => {
-                        navigate("/c/organization");
-                      },
-                    },
-                  ]}
-                />
-              }
-            >
-              <i>
-                <AiOutlinePlus />
-              </i>
-            </Dropdown>
+            <p className="m-0">My Tasks</p>
           </div>
-          <div className="flex-col items-start">
+          {/* <div className="flex-col items-start">
             Organizations
             <div>
               {userProfile.organizations &&
@@ -113,7 +148,7 @@ const Sidebar = () => {
                   </div>
                 ))}
             </div>
-          </div>
+          </div> */}
         </main>
       </aside>
     </div>

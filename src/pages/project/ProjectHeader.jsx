@@ -10,6 +10,8 @@ import {
   BsTags,
   BsTrash,
 } from "react-icons/bs";
+import { IoMdArrowDropdown } from "react-icons/io";
+
 import { FiBook, FiChevronDown, FiEye, FiSettings } from "react-icons/fi";
 import { RiAddCircleFill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
@@ -231,7 +233,7 @@ const ProjectHeader = (props) => {
         onCancel={closeAddModal}
       >
         <h2 className=" text-2xl">Create Sublist</h2>
-        <i>{iconsArr[0]}</i>
+        {/* <i>{iconsArr[0]}</i> */}
         <Form
           form={form}
           layout={"inline"}
@@ -247,18 +249,53 @@ const ProjectHeader = (props) => {
                 { required: true, message: "Please input your Sublist Name!" },
               ]}
             >
-              <Input placeholder="name" />
+              <Input
+                style={{
+                  padding: "0px",
+                }}
+                addonBefore={
+                  <Dropdown
+                    trigger={["click"]}
+                    overlay={
+                      <Menu
+                        items={[
+                          {
+                            label: (
+                              <div className="flex items-center gap-2 flex-wrap">
+                                {iconsArr.map((icon, i) => (
+                                  <i className="w-5 h-5 rounded-md" key={i}>
+                                    {icon}
+                                  </i>
+                                ))}
+                              </div>
+                            ),
+                          },
+                        ]}
+                      />
+                    }
+                  >
+                    <div className="flex items-center gap-1 cursor-pointer">
+                      <i>{iconsArr[0]}</i>
+                      <IoMdArrowDropdown />
+                    </div>
+                  </Dropdown>
+                }
+                placeholder="name"
+              />
             </Form.Item>
           </div>
           {/* <div> */}
           {/* <span>Share with</span> */}
-          <Form.Item
-            label={"Share with"}
-            name={"share_with"}
-            rules={[{ required: true, message: "Select a type" }]}
-          >
-            <Input placeholder="Share with" />
-          </Form.Item>
+          <div>
+            <span>Share with</span>
+            <Form.Item
+              label={""}
+              name={"share_with"}
+              rules={[{ required: true, message: "Select a type" }]}
+            >
+              <Input placeholder="Share with" />
+            </Form.Item>
+          </div>
           {/* </div> */}
         </Form>
         <div className="flex mt-5 items-center justify-end gap-3">

@@ -5,3 +5,29 @@ kbd {
   line-height: 1.5;
   @apply text-center border text-secondary border-gray-200 bg-gray-100 rounded-md;
 }
+
+.w-m-p {
+  .ant-menu-submenu-title {
+    padding: 0 !important;
+    height: 30px !important;
+    &:hover {
+      @apply text-primary;
+    }
+    i::before,
+    i::after {
+      display: none !important;
+    }
+  }
+}
+
+.w-c-m-p {
+  padding-left: 10px !important;
+  color: $primary !important;
+  &:hover {
+    color: #05843e !important;
+  }
+}
+
+.w-c-m-p.ant-menu-item-active {
+  color: $brand !important;
+}

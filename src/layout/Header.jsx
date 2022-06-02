@@ -8,10 +8,12 @@ import { RiApps2Line } from "react-icons/ri";
 import { IoColorPaletteOutline } from "react-icons/io5";
 import { IoMdArrowDropright } from "react-icons/io";
 import { setOpenedSidebar } from "../actions";
+import { useNavigate } from "react-router-dom";
 
 const Header = (props) => {
   const { head, children } = props;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const userProfile = useSelector((state) => {
     return state.userProfile;
   });
@@ -30,7 +32,36 @@ const Header = (props) => {
           <p className="text-lg ">{head}</p>
         </div>
         <div className="right mr-4 border-l border-secondary/30 pl-4 flex items-center gap-4">
-          <AiOutlinePlus />
+          <Dropdown
+            placement="bottomCenter"
+            trigger={["click"]}
+            overlay={
+              <Menu
+                items={[
+                  {
+                    label: "Add Project",
+                    key: "add_project",
+                    onClick: () => {
+                      navigate(
+                        `/c/project/${userProfile.organizations[0].org_id}`
+                      );
+                    },
+                  },
+                  {
+                    label: "Add Organization",
+                    key: "add_org",
+                    onClick: () => {
+                      navigate("/c/organization");
+                    },
+                  },
+                ]}
+              />
+            }
+          >
+            <i>
+              <AiOutlinePlus />
+            </i>
+          </Dropdown>
           <AiOutlineSearch />
           <Tooltip title={"Notification"}>
             <IoMdNotificationsOutline />

@@ -8,7 +8,7 @@
     }
   }
   main {
-    @apply flex flex-col gap-4 pl-4 pt-5;
+    @apply flex flex-col gap-2 pl-4 pt-5;
     .sec {
       @apply cursor-pointer pb-2 flex gap-3 items-center border-b border-gray-200;
       p {
