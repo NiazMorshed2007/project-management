@@ -36,6 +36,7 @@ const ProjectHeader = (props) => {
   const location = useLocation();
   const location_params = location.search;
   const [tabs, setTabs] = useState([]);
+  const [activeIconIndex, setActiveiconIndex] = useState(0);
   const showAddModal = () => {
     tabs.length > 4 ? setWarning(true) : setAddModal(true);
   };
@@ -58,7 +59,9 @@ const ProjectHeader = (props) => {
     const tab_data = {
       name: values.name,
       id: generateId(values.name),
+      iconIndex: activeIconIndex,
       link: `/w/p/${generateId(values.name)}/tree`,
+      type: "sublist",
     };
     org.projects[projectIndex].tabs.push({ ...tab_data });
     updateDoc(doc(db, "organizations", project.org_serverId), {
@@ -255,27 +258,30 @@ const ProjectHeader = (props) => {
                 }}
                 addonBefore={
                   <Dropdown
+                    placement="bottomCenter"
                     trigger={["click"]}
                     overlay={
-                      <Menu
-                        items={[
-                          {
-                            label: (
-                              <div className="flex items-center gap-2 flex-wrap">
-                                {iconsArr.map((icon, i) => (
-                                  <i className="w-5 h-5 rounded-md" key={i}>
-                                    {icon}
-                                  </i>
-                                ))}
-                              </div>
-                            ),
-                          },
-                        ]}
-                      />
+                      <div className="bg-white mt-2 p-2 max-w-[170px] rounded-lg shadow-xl border">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          {iconsArr.map((icon, i) => (
+                            <i
+                              onClick={() => {
+                                setActiveiconIndex(i);
+                              }}
+                              className={`w-6 ${
+                                i === activeIconIndex && "border-brand"
+                              } h-6 text-sm hover:border-brand transition-all border-transparent cursor-pointer border flex items-center justify-center rounded-md`}
+                              key={i}
+                            >
+                              {icon}
+                            </i>
+                          ))}
+                        </div>
+                      </div>
                     }
                   >
                     <div className="flex items-center gap-1 cursor-pointer">
-                      <i>{iconsArr[0]}</i>
+                      <i>{iconsArr[activeIconIndex]}</i>
                       <IoMdArrowDropdown />
                     </div>
                   </Dropdown>
@@ -288,6 +294,17 @@ const ProjectHeader = (props) => {
           {/* <span>Share with</span> */}
           <div>
             <span>Share with</span>
+            <Form.Item
+              label={""}
+              className={"w-full"}
+              name={"share_with"}
+              rules={[{ required: true, message: "Select a type" }]}
+            >
+              <Input placeholder="Share with" />
+            </Form.Item>
+          </div>
+          <div className="mt-4">
+            <span>Deafult View</span>
             <Form.Item
               label={""}
               name={"share_with"}
