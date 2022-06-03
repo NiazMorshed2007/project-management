@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 const DeleteModal = (props) => {
   const { visible, setVisible, type, name, onOk } = props;
-  const navigate = useNavigate();
   const [checked, setChecked] = useState(false);
   const closeModal = () => {
     setVisible(false);

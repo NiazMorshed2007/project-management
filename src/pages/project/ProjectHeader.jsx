@@ -1,4 +1,13 @@
-import { Button, Dropdown, Form, Input, Menu, Modal } from "antd";
+import {
+  Button,
+  Dropdown,
+  Form,
+  Input,
+  Menu,
+  Modal,
+  Radio,
+  Select,
+} from "antd";
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { BiMessageRounded, BiUser } from "react-icons/bi";
@@ -10,9 +19,8 @@ import {
   BsTags,
   BsTrash,
 } from "react-icons/bs";
-import { IoMdArrowDropdown } from "react-icons/io";
-
 import { FiBook, FiChevronDown, FiEye, FiSettings } from "react-icons/fi";
+import { IoMdArrowDropdown } from "react-icons/io";
 import { RiAddCircleFill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -24,6 +32,8 @@ import { db } from "../../firebase/firebase";
 import { iconsArr } from "../../functions/icons.arr";
 import { generateId } from "../../functions/idGenerator";
 import Header from "../../layout/Header";
+
+const { Option } = Select;
 
 const ProjectHeader = (props) => {
   const { project, org, projectIndex, tabId } = props;
@@ -38,13 +48,15 @@ const ProjectHeader = (props) => {
   const [tabs, setTabs] = useState([]);
   const [activeIconIndex, setActiveiconIndex] = useState(0);
   const showAddModal = () => {
-    tabs.length > 4 ? setWarning(true) : setAddModal(true);
+    // tabs.length > 4 ? setWarning(true) :
+    setAddModal(true);
   };
   const closeAddModal = () => {
     setAddModal(false);
     form.resetFields();
   };
 
+  // deleting functions
   const handleDeleteProject = () => {
     org.projects.splice(projectIndex, 1);
     console.log(org.projects);
@@ -54,13 +66,15 @@ const ProjectHeader = (props) => {
     navigate(`/w/o/overview?orgId=${org.org_id}`);
   };
 
+  // adding functions
   const handleAddSublist = (values) => {
     dispatch(SetGlobalLoading(true));
     const tab_data = {
       name: values.name,
       id: generateId(values.name),
       iconIndex: activeIconIndex,
-      link: `/w/p/${generateId(values.name)}/tree`,
+      defaultView: values.default_view,
+      link: `/w/p/${generateId(values.name)}/${values.default_view}`,
       type: "sublist",
     };
     org.projects[projectIndex].tabs.push({ ...tab_data });
@@ -202,6 +216,8 @@ const ProjectHeader = (props) => {
       }
     >
       <CustomTabs
+        project={project}
+        org={org}
         addingOption={
           <>
             <div className=" flex items-center gap-1">
@@ -244,7 +260,9 @@ const ProjectHeader = (props) => {
           onFinish={handleAddSublist}
         >
           <div>
-            <span>Name</span>
+            <span className="text-[14px] text-slate-800 font-semibold">
+              Name
+            </span>
             <Form.Item
               label={""}
               name={"name"}
@@ -286,31 +304,41 @@ const ProjectHeader = (props) => {
                     </div>
                   </Dropdown>
                 }
-                placeholder="name"
+                placeholder="Sublist name"
               />
             </Form.Item>
           </div>
           {/* <div> */}
           {/* <span>Share with</span> */}
           <div>
-            <span>Share with</span>
+            <span className="text-[14px] text-slate-800 font-semibold">
+              Share with
+            </span>
             <Form.Item
-              label={""}
-              className={"w-full"}
-              name={"share_with"}
-              rules={[{ required: true, message: "Select a type" }]}
+              className="w-[240px]"
+              name="share_with"
+              rules={[{ required: true, message: "Please select a type!" }]}
             >
-              <Input placeholder="Share with" />
+              <Select className="w-[290px]" placeholder="Share with">
+                <Option value="project_members">Project Memebers</Option>
+                <Option value="only_me">Only me</Option>
+              </Select>
             </Form.Item>
           </div>
           <div className="mt-4">
-            <span>Deafult View</span>
+            <span className="text-[14px] text-slate-800 font-semibold">
+              Deafult View
+            </span>
             <Form.Item
-              label={""}
-              name={"share_with"}
-              rules={[{ required: true, message: "Select a type" }]}
+              rules={[{ required: true, message: "Select a view" }]}
+              name="default_view"
+              label=""
             >
-              <Input placeholder="Share with" />
+              <Radio.Group>
+                <Radio value="tree">Tree</Radio>
+                <Radio value="board">Board</Radio>
+                <Radio value="timeline">Timeline</Radio>
+              </Radio.Group>
             </Form.Item>
           </div>
           {/* </div> */}
@@ -343,7 +371,7 @@ const ProjectHeader = (props) => {
         visible={deleteVisible}
         setVisible={setDeleteVisisble}
         onOk={handleDeleteProject}
-        name={project.project_name}
+        name={project && project.project_name}
         type={"Project"}
       />
     </Header>

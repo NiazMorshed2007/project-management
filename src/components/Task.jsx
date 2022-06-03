@@ -102,18 +102,19 @@ const Task = (props) => {
   const statuses_data = () => {
     const items = [];
     // eslint-disable-next-line
-    project.statuses.map((status) => {
-      items.push({
-        label: status.name,
-        key: status.id,
-        style: {
-          color: status.id === task_status && "#05843e",
-        },
-        onClick: () => {
-          handleUpdateTask("task_status", status.id);
-        },
+    project.statuses &&
+      project.statuses.map((status) => {
+        items.push({
+          label: status.name,
+          key: status.id,
+          style: {
+            color: status.id === task_status && "#05843e",
+          },
+          onClick: () => {
+            handleUpdateTask("task_status", status.id);
+          },
+        });
       });
-    });
     return items;
   };
 
