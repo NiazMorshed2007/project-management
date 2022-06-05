@@ -78,7 +78,7 @@ const Project = () => {
         tabId={id}
         project={project && project}
       />
-      <Main>
+      <Main Notpadding={true}>
         {id === "overview" ? (
           <ProjectOverview org={org} project={project} />
         ) : (

@@ -19,7 +19,13 @@ const TreeView = (props) => {
     setCurrentView("tree");
   }, []);
   return (
-    <div className="tasks-wrapper">
+    <div
+      style={{
+        paddingRight: "13%",
+        paddingLeft: "13%",
+      }}
+      className="tasks-wrapper mt-5 pb-10"
+    >
       <div className="border-t border-gray-200">
         {tasks.map((task, index) => (
           <div key={task.task_id} className="task-wrap">

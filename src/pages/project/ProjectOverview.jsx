@@ -115,7 +115,12 @@ const ProjectOverview = (props) => {
   return (
     <>
       {project && (
-        <>
+        <div
+          style={{
+            paddingRight: "13%",
+            paddingLeft: "13%",
+          }}
+        >
           <BaseInfo
             rounded={false}
             avatar={
@@ -218,7 +223,7 @@ const ProjectOverview = (props) => {
               <JoinedMembers />
             </div>
           </section>
-        </>
+        </div>
       )}
     </>
   );

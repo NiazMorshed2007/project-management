@@ -110,7 +110,7 @@ const TaskPage = (props) => {
           ))}
         </div>
       </header>
-      <div className="pt-14">
+      <div className="pt-10">
         <Routes>
           <Route
             path="tree"
@@ -126,7 +126,15 @@ const TaskPage = (props) => {
           />
           <Route
             path="board"
-            element={<BoardView setCurrentView={setCurrentView} />}
+            element={
+              <BoardView
+                tasks={tasks}
+                project={project}
+                tabId={tabId}
+                org={org}
+                setCurrentView={setCurrentView}
+              />
+            }
           />
         </Routes>
       </div>
