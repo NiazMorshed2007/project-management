@@ -10,6 +10,7 @@ const addTask = (name, project, org, tabId, dispatch) => {
       task_tabId: tabId,
       task_status: "todo",
       task_priority: "none",
+      task_progress: 0,
     };
     project.tasks.push({
       ...newTask,

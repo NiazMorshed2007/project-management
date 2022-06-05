@@ -20,6 +20,7 @@ import { GrActions } from "react-icons/gr";
 import { IoMdArrowDropright } from "react-icons/io";
 import { db } from "../firebase/firebase";
 import findIndexTasksById from "../functions/findIndexTasksById";
+import TaskCircle from "./TaskCircle";
 
 const Task = (props) => {
   const {
@@ -30,6 +31,7 @@ const Task = (props) => {
     org,
     task_id,
     task_status,
+    task_progress,
     task_priority,
     task_tabId,
   } = props;
@@ -112,6 +114,7 @@ const Task = (props) => {
           },
           onClick: () => {
             handleUpdateTask("task_status", status.id);
+            handleUpdateTask("task_progress", status.progress);
           },
         });
       });
@@ -314,7 +317,7 @@ const Task = (props) => {
             <div className="absolute px-2 before-actions flex items-center gap-2 top-0 h-full left-0 -translate-x-full">
               <Tooltip mouseEnterDelay={1} title="Complete" placement="bottom">
                 <i>
-                  <BsCircle />
+                  <TaskCircle progress={task_progress} />
                 </i>
               </Tooltip>
               <Dropdown

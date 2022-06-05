@@ -61,14 +61,17 @@ const CreateProject = () => {
             name: "To-Do",
             id: "todo",
             isDeletable: false,
+            progress: 0,
           },
           {
             name: "In Progress",
             id: "in_progress",
+            progress: 40,
             isDeletable: "true",
           },
           {
             name: "Completed",
+            progress: 100,
             id: "completed",
             isDeletable: false,
           },
