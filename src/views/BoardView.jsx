@@ -10,17 +10,6 @@ const BoardView = (props) => {
   const statuses = project && project.statuses;
   useEffect(() => {
     setCurrentView("board");
-    statuses &&
-      statuses.map((s) => {
-        tasks &&
-          tasks
-            .filter((task) => {
-              return task.task_status === s.id;
-            })
-            .map((fTask) => {
-              console.log(fTask);
-            });
-      });
   });
   return (
     <div className="px-14">
@@ -30,10 +19,10 @@ const BoardView = (props) => {
             <div
               key={status_board.id}
               className={
-                " w-[360px] h-[465px] shadow-lg transition-all hover:shadow-xl cursor-pointer rounded-lg overflow-hidden border border-gray-200"
+                " w-[360px] h-max-[465px] h-max shadow-lg transition-all hover:shadow-xl cursor-pointer rounded-lg overflow-hidden border border-gray-200"
               }
             >
-              <div className="header flex items-center justify-between p-5 bg-gray-100">
+              <div className="header h-14 flex items-center justify-between p-5 border-b">
                 <div className="flex items-center">
                   <TaskCircle progress={status_board.progress} />
                   <h1 className="text-lg ml-2 font-normal text-gray-500 m-0">
@@ -44,10 +33,10 @@ const BoardView = (props) => {
                   <BsThreeDots />
                 </i>
               </div>
-              <div className="body">
+              <div className="body bg-gray-100/70 h-full p-2 flex flex-col gap-2">
                 {tasks &&
                   tasks
-                    .map((task) => {
+                    .filter((task) => {
                       return task.task_status === status_board.id;
                     })
                     .map((task) => (

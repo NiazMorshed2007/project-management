@@ -21,6 +21,7 @@ import { IoMdArrowDropright } from "react-icons/io";
 import { db } from "../../firebase/firebase";
 import findIndexTasksById from "../../functions/findIndexTasksById";
 import TaskCircle from "../TaskCircle";
+import TaskByPriority from "./TaskByPriority";
 
 const Task = (props) => {
   const {
@@ -36,7 +37,7 @@ const Task = (props) => {
     task_tabId,
   } = props;
   // fixed priority items
-  console.log(task_name);
+  console.log(task_status);
   const priority_items = [
     {
       name: "Urgent",
@@ -320,23 +321,11 @@ const Task = (props) => {
                   <TaskCircle progress={task_progress} />
                 </i>
               </Tooltip>
-              <Dropdown
-                overlay={<Menu items={[...priorityData()]} />}
-                trigger={["click"]}
-              >
-                <Tooltip
-                  mouseEnterDelay={1}
-                  title="Priority"
-                  placement="bottom"
-                >
-                  <i className={`${task_priority !== "none" && "visib"}`}>
-                    {task_priority === "urgent" && priority_items[0].icon}
-                    {task_priority === "high" && priority_items[1].icon}
-                    {task_priority === "none" && priority_items[2].icon}
-                    {task_priority === "low" && priority_items[3].icon}
-                  </i>
-                </Tooltip>
-              </Dropdown>
+              <TaskByPriority
+                task_priority={task_priority}
+                items={[...priorityData()]}
+                priority_items={priority_items}
+              />
             </div>
             <div className="absolute abs-actions h-full top-0 right-0 flex items-center gap-20 px-7">
               <Tooltip placement="bottom" title="Set Tag">
@@ -359,12 +348,28 @@ const Task = (props) => {
         </Dropdown>
       )}
       {type === "board" && (
-        <div className="task-b">
-          <div className="flex items-center gap-2">
-            <TaskCircle progress={task_progress} />
-            <h1>{task_name}</h1>
+        <Dropdown
+          trigger={["contextMenu"]}
+          overlay={<Menu items={taskContextMenu} />}
+        >
+          <div className="task-b bg-white transition-all hover:shadow-md shadow-sm w-full p-2 rounded-lg h-20 border">
+            <div className="flex items-center gap-2">
+              <TaskCircle progress={task_progress} />
+              {task_status === "completed" ? (
+                <del className=" text-gray-500">{task_name}</del>
+              ) : (
+                <h1 className="m-0">{task_name}</h1>
+              )}
+            </div>
+            <div className="actions flex items-center gap-3 mt-2 px-1">
+              <TaskByPriority
+                task_priority={task_priority}
+                items={[...priorityData()]}
+                priority_items={priority_items}
+              />
+            </div>
           </div>
-        </div>
+        </Dropdown>
       )}
     </>
   );
