@@ -2,6 +2,7 @@ import { Progress } from "antd";
 import React, { useEffect } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
+import Task from "../components/task/Task";
 import TaskCircle from "../components/TaskCircle";
 
 const BoardView = (props) => {
@@ -9,6 +10,17 @@ const BoardView = (props) => {
   const statuses = project && project.statuses;
   useEffect(() => {
     setCurrentView("board");
+    statuses &&
+      statuses.map((s) => {
+        tasks &&
+          tasks
+            .filter((task) => {
+              return task.task_status === s.id;
+            })
+            .map((fTask) => {
+              console.log(fTask);
+            });
+      });
   });
   return (
     <div className="px-14">
@@ -31,6 +43,23 @@ const BoardView = (props) => {
                 <i className="cursor-pointer">
                   <BsThreeDots />
                 </i>
+              </div>
+              <div className="body">
+                {tasks &&
+                  tasks
+                    .map((task) => {
+                      return task.task_status === status_board.id;
+                    })
+                    .map((task) => (
+                      <div key={task.task_id}>
+                        <Task
+                          type={"board"}
+                          project={project}
+                          org={org}
+                          {...task}
+                        />
+                      </div>
+                    ))}
               </div>
             </div>
           ))}

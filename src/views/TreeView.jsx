@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Task from "../components/Task";
+import Task from "../components/task/Task";
 import addTask from "../functions/addTask";
 import useClickOutside from "../hooks/useClickOutside";
 
