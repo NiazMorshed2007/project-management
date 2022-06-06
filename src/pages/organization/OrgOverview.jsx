@@ -4,6 +4,9 @@ import { FiEdit2 } from "react-icons/fi";
 import { Button } from "antd";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { DragDropContext } from "react-beautiful-dnd";
+import { Droppable } from "react-beautiful-dnd";
+import { Draggable } from "react-beautiful-dnd";
 
 const OrgOverview = (props) => {
   const { org, current_orgId } = props;
@@ -73,63 +76,85 @@ const OrgOverview = (props) => {
                     You don't have any projects. Add one to get started... 👇
                   </div>
                 ) : (
-                  <div className="flex items-center gap-7">
-                    {org.projects.map((project) => (
-                      <div
-                        className="w-4/12 flex items-center justify-between bg-white border border-gray-200 p-2 rounded-lg shadow-xl"
-                        key={project.project_id}
-                      >
-                        <div>
-                          <h1
-                            onClick={() => {
-                              navigate(
-                                `/w/p/overview?orgId=${org.org_id}&projectId=${project.project_id}`
-                              );
-                            }}
-                            className="transition-all inline-block text-md capitalize hover:text-brand cursor-pointer"
-                          >
-                            {project.project_name}
-                          </h1>
-                          <div className="text-xs">
-                            <p>
-                              <span className=" text-secondaryBrand">
-                                Total taks:
-                              </span>{" "}
-                              {project.tasks.length}
-                            </p>
-                            <p>
-                              <span className=" text-secondaryBrand">
-                                Total tabs:
-                              </span>{" "}
-                              {project.tabs.length}
-                            </p>
-                          </div>
-                        </div>
-                        <div>
-                          <p className="text-xs">Joined memebers</p>
-                          <div className="flex items-center gap-1">
-                            {users.map((u, i) => (
-                              <div key={u.name}>
+                  <DragDropContext>
+                    <Droppable droppableId="projects">
+                      {(provided) => {
+                        <div
+                          {...provided.droppableProps}
+                          ref={provided.innerRef}
+                          className="flex items-center gap-7"
+                        >
+                          {org.projects.map((project, index) => (
+                            <Draggable
+                              index={index}
+                              draggableId={project.project_id}
+                              key={project.project_id + index}
+                            >
+                              {(provided) => {
                                 <div
-                                  className={`avatar 
-                                  relative w-6 h-6 p-2 flex items-center justify-center rounded-full`}
-                                  style={{
-                                    background: u.color,
-                                    transform: `translateX(-${i * 7}px)`,
-                                    zIndex: i,
-                                  }}
+                                  ref={provided.innerRef}
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                  className="w-4/12 flex items-center justify-between bg-white border border-gray-200 p-2 rounded-lg shadow-xl"
                                 >
-                                  <p className="m-0 text-xs text-white">
-                                    {u.name}
-                                  </p>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+                                  <div>
+                                    <h1
+                                      onClick={() => {
+                                        navigate(
+                                          `/w/p/overview?orgId=${org.org_id}&projectId=${project.project_id}`
+                                        );
+                                      }}
+                                      className="transition-all inline-block text-md capitalize hover:text-brand cursor-pointer"
+                                    >
+                                      {project.project_name}
+                                    </h1>
+                                    <div className="text-xs">
+                                      <p>
+                                        <span className=" text-secondaryBrand">
+                                          Total taks:
+                                        </span>{" "}
+                                        {project.tasks.length}
+                                      </p>
+                                      <p>
+                                        <span className=" text-secondaryBrand">
+                                          Total tabs:
+                                        </span>{" "}
+                                        {project.tabs.length}
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <p className="text-xs">Joined memebers</p>
+                                    <div className="flex items-center gap-1">
+                                      {users.map((u, i) => (
+                                        <div key={u.name}>
+                                          <div
+                                            className={`avatar 
+                                        relative w-6 h-6 p-2 flex items-center justify-center rounded-full`}
+                                            style={{
+                                              background: u.color,
+                                              transform: `translateX(-${
+                                                i * 7
+                                              }px)`,
+                                              zIndex: i,
+                                            }}
+                                          >
+                                            <p className="m-0 text-xs text-white">
+                                              {u.name}
+                                            </p>
+                                          </div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                </div>;
+                              }}
+                            </Draggable>
+                          ))}
+                        </div>;
+                      }}
+                    </Droppable>
+                  </DragDropContext>
                 )}
               </>
             )}

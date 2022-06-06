@@ -311,6 +311,8 @@ const Task = (props) => {
           <div
             style={{
               ...style,
+              padding: "6px 10px",
+              paddingLeft: "15px",
             }}
             className="task border-b pl-7 transition-all relative hover:bg-gray-100 cursor-pointer border-gray-300"
           >
@@ -352,21 +354,36 @@ const Task = (props) => {
           trigger={["contextMenu"]}
           overlay={<Menu items={taskContextMenu} />}
         >
-          <div className="task-b bg-white transition-all hover:shadow-md shadow-sm w-full p-2 rounded-lg h-20 border">
+          <div className=" task flex flex-col pb-3 justify-between task-b bg-white transition-all hover:shadow-md shadow-sm w-full p-2 rounded-sm h-20 border">
             <div className="flex items-center gap-2">
               <TaskCircle progress={task_progress} />
               {task_status === "completed" ? (
                 <del className=" text-gray-500">{task_name}</del>
               ) : (
-                <h1 className="m-0">{task_name}</h1>
+                <p className="m-0">{task_name}</p>
               )}
             </div>
-            <div className="actions flex items-center gap-3 mt-2 px-1">
+            <div className="actions text-gray-500 before-actions flex items-center gap-3 px-1">
               <TaskByPriority
                 task_priority={task_priority}
                 items={[...priorityData()]}
                 priority_items={priority_items}
               />
+              <Tooltip placement="bottom" title="Set Tag">
+                <i>
+                  <BsTag />
+                </i>
+              </Tooltip>
+              <Tooltip placement="bottom" title="Date">
+                <i>
+                  <BsCalendar3 />
+                </i>
+              </Tooltip>
+              <Tooltip placement="bottom" title="Assignee">
+                <i>
+                  <AiOutlineUser />
+                </i>
+              </Tooltip>
             </div>
           </div>
         </Dropdown>

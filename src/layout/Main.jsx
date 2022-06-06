@@ -1,4 +1,5 @@
 import React from "react";
+import { Scrollbars } from "react-custom-scrollbars";
 
 const Main = (props) => {
   const { children, Notpadding = false } = props;
@@ -11,9 +12,17 @@ const Main = (props) => {
             paddingLeft: !Notpadding && "13%",
             height: "calc(100vh - 120px)",
           }}
-          className={`inner ${!Notpadding && "mt-5 pb-10"} overflow-y-auto`}
+          className={`inner ${!Notpadding && "mt-5 pb-10"} `}
         >
-          {children}
+          <Scrollbars
+            autoHeight
+            autoHide
+            autoHeightMin={250}
+            autoHeightMax={520}
+            style={{ width: 100 + "%" }}
+          >
+            {children}
+          </Scrollbars>
         </div>
       </div>
     </main>
