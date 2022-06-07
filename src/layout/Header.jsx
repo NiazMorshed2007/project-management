@@ -33,7 +33,7 @@ const Header = (props) => {
         </div>
         <div className="right mr-4 border-l border-secondary/30 pl-4 flex items-center gap-4">
           <Dropdown
-            placement="bottomCenter"
+            placement="bottom"
             trigger={["click"]}
             overlay={
               <Menu

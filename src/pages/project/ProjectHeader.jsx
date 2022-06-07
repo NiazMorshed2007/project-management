@@ -276,7 +276,7 @@ const ProjectHeader = (props) => {
                 }}
                 addonBefore={
                   <Dropdown
-                    placement="bottomCenter"
+                    placement="bottom"
                     trigger={["click"]}
                     overlay={
                       <div className="bg-white mt-2 p-2 max-w-[170px] rounded-lg shadow-xl border">

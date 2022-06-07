@@ -27,6 +27,7 @@ const Task = (props) => {
   const {
     style,
     task_name,
+    isDragging,
     type,
     project,
     org,
@@ -313,13 +314,27 @@ const Task = (props) => {
               ...style,
               padding: "6px 10px",
               paddingLeft: "15px",
+              width: isDragging ? "25%" : "100%",
+              border: isDragging && "1px solid #05843e",
+              transform: isDragging ? "translateX(40%)" : "translateX(0)",
+              transition: "all .3s ease-in-out",
             }}
-            className="task border-b pl-7 transition-all relative hover:bg-gray-100 cursor-pointer border-gray-300"
+            className={`task bg-white ${
+              isDragging && "shadow-md"
+            } border-b pl-7 relative hover:bg-gray-100 cursor-pointer border-gray-300 `}
           >
-            {task_name}
-            <div className="absolute px-2 before-actions flex items-center gap-2 top-0 h-full left-0 -translate-x-full">
+            {task_status === "completed" ? (
+              <del>{task_name}</del>
+            ) : (
+              <p className="m-0">{task_name}</p>
+            )}
+            <div
+              className={`absolute px-2 before-actions flex items-center gap-2 top-0 h-full left-0 -translate-x-full ${
+                isDragging && "hidden"
+              }`}
+            >
               <Tooltip mouseEnterDelay={1} title="Complete" placement="bottom">
-                <i>
+                <i className={`${task_status !== "todo" && "visib"}`}>
                   <TaskCircle progress={task_progress} />
                 </i>
               </Tooltip>

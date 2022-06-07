@@ -7,6 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { DragDropContext } from "react-beautiful-dnd";
 import { Droppable } from "react-beautiful-dnd";
 import { Draggable } from "react-beautiful-dnd";
+import { reorderArr } from "../../functions/ReOrderArr";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
 
 const OrgOverview = (props) => {
   const { org, current_orgId } = props;
@@ -80,16 +83,27 @@ const OrgOverview = (props) => {
                     onDragEnd={(...param) => {
                       const srcI = param[0].source.index;
                       const desI = param[0].destination?.index;
+                      reorderArr(org.projects, srcI, desI);
+                      updateDoc(
+                        doc(db, "organizations", org.projects[0].org_serverId),
+                        {
+                          projects: org.projects,
+                        }
+                      );
                     }}
                   >
                     <Droppable
                       droppableId={"droppable-1"}
                       direction={"horizontal"}
                     >
-                      {(provided) => (
+                      {(provided, snapshot) => (
                         <div
                           ref={provided.innerRef}
-                          className="flex items-center gap-7"
+                          className={`flex border p-3 rounded-lg ${
+                            snapshot.isDraggingOver
+                              ? "border-dashed shadow-md border-brand"
+                              : "border-transparent "
+                          } items-center gap-7`}
                           {...provided.droppableProps}
                         >
                           {org.projects.map((project, i) => (
