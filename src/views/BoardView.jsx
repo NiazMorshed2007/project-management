@@ -43,30 +43,31 @@ const BoardView = (props) => {
                   <BsThreeDots />
                 </i>
               </div>
-              <DragDropContext
-                onDragEnd={(...param) => {
-                  const srcI = param[0].source.index;
-                  const desI = param[0].destination?.index;
-                  reorderArr(tasks, srcI, desI);
-                  updateDoc(doc(db, "organizations", project.org_serverId), {
-                    projects: org.projects,
-                  });
-                }}
-              >
-                <Droppable droppableId="droppable-board-tasks">
-                  {(provided) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.droppableProps}
-                      className="body bg-gray-100/70 h-full flex flex-col gap-2"
-                    >
-                      <Scrollbars
-                        autoHeight
-                        autoHide
-                        autoHeightMin={0}
-                        autoHeightMax={355}
-                        style={{ width: 100 + "%" }}
+              <div className="overflow-auto">
+                <DragDropContext
+                  onDragEnd={(...param) => {
+                    const srcI = param[0].source.index;
+                    const desI = param[0].destination?.index;
+                    reorderArr(tasks, srcI, desI);
+                    updateDoc(doc(db, "organizations", project.org_serverId), {
+                      projects: org.projects,
+                    });
+                  }}
+                >
+                  <Droppable droppableId="droppable-board-tasks">
+                    {(provided) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                        className="body bg-gray-100/70 h-full flex flex-col gap-2"
                       >
+                        {/* <Scrollbars
+                          autoHeight
+                          autoHide
+                          autoHeightMin={0}
+                          autoHeightMax={355}
+                          style={{ width: 100 + "%" }}
+                        > */}
                         {tasks &&
                           tasks
                             .filter((task) => {
@@ -95,13 +96,13 @@ const BoardView = (props) => {
                                 )}
                               </Draggable>
                             ))}
-                      </Scrollbars>
-                      {provided.placeholder}
-                    </div>
-                  )}
-                </Droppable>
-              </DragDropContext>
-
+                        {/* </Scrollbars> */}
+                        {provided.placeholder}
+                      </div>
+                    )}
+                  </Droppable>
+                </DragDropContext>
+              </div>
               <div className="footer flex items-center bg-gray-100/70">
                 <h1 className="text-sm p-2 py-3 flex items-center gap-1 font-light hover:text-gray-500 cursor-pointer text-gray-400">
                   <AiOutlinePlus />
