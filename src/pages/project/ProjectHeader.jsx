@@ -36,7 +36,7 @@ import Header from "../../layout/Header";
 const { Option } = Select;
 
 const ProjectHeader = (props) => {
-  const { project, org, projectIndex, tabId } = props;
+  const { project, org, projectIndex } = props;
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const [warning, setWarning] = useState(false);
@@ -240,7 +240,6 @@ const ProjectHeader = (props) => {
             </div>
           </>
         }
-        defaultActiveTabId={tabId}
         tabs={tabs}
       />
 

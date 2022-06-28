@@ -1,7 +1,7 @@
 import { collection, onSnapshot, query, where } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { SetGlobalLoading } from "../../actions";
 import { db } from "../../firebase/firebase";
 import Layout from "../../layout/Layout";
@@ -10,7 +10,6 @@ import OrgHeader from "./OrgHeader";
 import OrgOverview from "./OrgOverview";
 
 const Organization = () => {
-  const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   const [org, setOrg] = useState({});
@@ -35,10 +34,11 @@ const Organization = () => {
       dispatch(SetGlobalLoading(false));
       e_org.length < 1 ? navigate("/error") : setOrg(...e_org);
     });
+    // eslint-disable-next-line
   }, [url_org_id]);
   return (
     <Layout>
-      <OrgHeader org={org} id={id} />
+      <OrgHeader org={org} />
       <Main>
         <OrgOverview current_orgId={url_org_id} org={org} />
       </Main>

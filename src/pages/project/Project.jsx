@@ -75,7 +75,6 @@ const Project = () => {
       <ProjectHeader
         projectIndex={projectIndex}
         org={org}
-        tabId={id}
         project={project && project}
       />
       <Main Notpadding={true}>

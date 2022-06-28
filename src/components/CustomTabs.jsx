@@ -1,22 +1,20 @@
 import { Dropdown, Menu } from "antd";
 import { doc, updateDoc } from "firebase/firestore";
-import React, { useRef, useState } from "react";
+import { useState } from "react";
 import { BsPencil, BsTrash } from "react-icons/bs";
 import { IoMdArrowDropdown } from "react-icons/io";
-import { useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { db } from "../firebase/firebase";
 import { iconsArr } from "../functions/icons.arr";
 import DeleteModal from "./DeleteModal";
 
 const CustomTabs = (props) => {
-  const { tabs, defaultActiveTabId, project, org, addingOption } = props;
-  const [activeTab, setActiveTab] = useState(defaultActiveTabId);
+  const { tabs, project, org, addingOption } = props;
   const [delModalVisib, setDelModalVisib] = useState(false);
   const [currentTabIndex, setCurrentTabIndex] = useState(0);
   const location = useLocation();
   const location_params = location.search;
   const navigate = useNavigate();
-  const tabRef = useRef([]);
   const handleDeleteSublist = () => {
     const di = project.tabs.findIndex((tab) => {
       return tab.id === currentTabIndex;
@@ -28,29 +26,26 @@ const CustomTabs = (props) => {
     navigate(`/w/p/lists/tree${location.search}`);
     setDelModalVisib(false);
   };
-  const setActiveKey = (key) => {
-    setActiveTab(key);
-  };
   return (
     <>
       <div className="tabs-wrapper relative flex items-center gap-4">
         {tabs.map((tab, i) => (
           <div
-            ref={(el) => (tabRef.current[i] = el)}
-            onClick={() => {
-              setActiveKey(tab.id);
-              navigate(`${tab.link}${location_params}`);
-            }}
             style={{ ...tab.style }}
-            className={`tab ${tab.id} ${
-              activeTab === tab.id
-                ? "active-tab border-b-brand font-semibold"
-                : "hover:border-b-brand/40 w-max "
-            } cursor-pointer  flex items-center border-transparent border-b-2`}
+            className={`tab w-max cursor-pointer flex items-center`}
             key={tab.id}
           >
             {tab.iconIndex && iconsArr[tab.iconIndex]}
-            <p className=" capitalize">{tab.name}</p>
+            <NavLink
+              className={(l) =>
+                l.isActive
+                  ? "border-b-brand border-b-2 hover:text-black text-black"
+                  : "text-black hover:text-black"
+              }
+              to={`${tab.link}${location_params}`}
+            >
+              <p className=" capitalize">{tab.name}</p>
+            </NavLink>
             {tab.type && tab.type === "sublist" && (
               <>
                 <div className="opt">

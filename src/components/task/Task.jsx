@@ -38,7 +38,6 @@ const Task = (props) => {
     task_tabId,
   } = props;
   // fixed priority items
-  console.log(task_status);
   const priority_items = [
     {
       name: "Urgent",

@@ -6,8 +6,7 @@ import Header from "../../layout/Header";
 import { FiChevronDown, FiSettings } from "react-icons/fi";
 import { BsFullscreen, BsPencil } from "react-icons/bs";
 
-const HeaderHome = (props) => {
-  const { id } = props;
+const HeaderHome = () => {
   const userProfile = useSelector((state) => {
     return state.userProfile;
   });
@@ -73,7 +72,7 @@ const HeaderHome = (props) => {
           </div>
         }
       >
-        <CustomTabs defaultActiveTabId={id} tabs={tabs} />
+        <CustomTabs tabs={tabs} />
       </Header>
     </>
   );

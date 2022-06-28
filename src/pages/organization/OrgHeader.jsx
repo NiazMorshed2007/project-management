@@ -8,7 +8,7 @@ import CustomTabs from "../../components/CustomTabs";
 import Header from "../../layout/Header";
 
 const OrgHeader = (props) => {
-  const { id, org } = props;
+  const { org } = props;
   const [tabs, setTabs] = useState([]);
   useEffect(() => {
     setTabs([
@@ -88,7 +88,7 @@ const OrgHeader = (props) => {
         </>
       }
     >
-      <CustomTabs defaultActiveTabId={id} tabs={tabs} />
+      <CustomTabs tabs={tabs} />
     </Header>
   );
 };

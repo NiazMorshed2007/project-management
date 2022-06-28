@@ -14,7 +14,7 @@ const Home = () => {
   });
   return (
     <Layout>
-      <HeaderHome id={id} />
+      <HeaderHome />
       <Main>
         {id === "overview" && <HomeOverview />}
         {id === "my_tasks" && <TaskPage tasks={userProfile.my_tasks} />}
